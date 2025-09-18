@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>رزرو وقت | مکانیکی امیدواری</title>
+  <style>
+    @import url('https://v1.fontapi.ir/css/Sahel');
+
+    body {
+      font-family: 'Sahel', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .contacts {
+      margin: 20px 0;
+    }
+
+    .contacts a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 18px;
+      color: #ffd700;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: color 0.3s;
+    }
+
+    .contacts a:hover {
+      color: #000;
+    }
+
+    .contacts img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #ffd700;
+      color: #000;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* حالت شب */
+    body.night {
+      background: #1c2a3a;
+      color: #eee;
+    }
+
+    body.night .contacts a {
+      color: #ffd700;
+    }
+
+    body.night .back-btn {
+      background: #ffd700;
+      color: #000;
+    }
+
+    /* دکمه حبابی تغییر تم */
+    .theme-bubble {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #0078ff;
+      color: #fff;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 22px;
+      z-index: 1001;
+    }
+
+    .theme-menu {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1001;
+
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .theme-menu.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .theme-menu button {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>📞 رزرو وقت</h1>
+  <p>برای رزرو وقت با شماره‌های زیر تماس بگیرید:</p>
+
+  <div class="contacts">
+    <a href="tel:+989134065732">
+      <img src="https://img.icons8.com/ios-filled/50/000000/phone.png" alt="phone"> 0913-406-5732
+    </a>
+    <a href="tel:+989137302692">
+      <img src="https://img.icons8.com/ios-filled/50/000000/phone.png" alt="phone"> 0913-730-2692
+    </a>
+  </div>
+
+  <a href="index.html" class="back-btn">⬅ بازگشت به صفحه اصلی</a>
+
+  <!-- دکمه حبابی -->
+  <div class="theme-bubble" onclick="toggleThemeMenu()">⚙️</div>
+
+  <!-- منوی تم -->
+  <div class="theme-menu" id="themeMenu">
+    <button onclick="setTheme('day')">☀️</button>
+    <button onclick="setTheme('night')">🌙</button>
+    <button onclick="setTheme('auto')">⚙️</button>
+  </div>
+
+  <script>
+    function setTheme(mode) {
+      if (mode === 'day') {
+        document.body.classList.remove('night');
+        localStorage.setItem('theme', 'day');
+      } else if (mode === 'night') {
+        document.body.classList.add('night');
+        localStorage.setItem('theme', 'night');
+      } else if (mode === 'auto') {
+        const hour = new Date().getHours();
+        if (hour >= 18 || hour < 5) {
+          document.body.classList.add('night');
+        } else {
+          document.body.classList.remove('night');
+        }
+        localStorage.setItem('theme', 'auto');
+      }
+    }
+
+    function toggleThemeMenu() {
+      const menu = document.getElementById('themeMenu');
+      menu.classList.toggle('show');
+    }
+
+    // اعمال تنظیم قبلی
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) setTheme(savedTheme);
+  </script>
+</body>
+</html>
