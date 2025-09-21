@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوکیشن مغازه ما</title>
+  <style>
+    @import url('https://v1.fontapi.ir/css/Vazir');
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+    h1 {
+      margin: 20px 0;
+      font-size: 28px;
+      color: #222;
+    }
+    p {
+      font-size: 18px;
+      text-align: center;
+      margin: 10px 0;
+      color: #444;
+    }
+    iframe {
+      border: 0;
+      width: 90%;
+      height: 300px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    a.map-link {
+      display: inline-block;
+      margin: 10px 0 20px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    a.map-link:hover {
+      background: #0056b3;
+    }
+    .back-btn {
+      margin: 20px 0;
+      padding: 12px 25px;
+      background: #444;
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>📍 لوکیشن مغازه ما</h1>
+
+  <p>آدرس: گلپایگان، ۷۰۰ متری جاده کوچری (مغازه واقع در جاده خاکی)</p>
+  <p>موقعیت مکانی مغازه روی نقشه:</p>
+
+  <!-- نقشه گوگل -->
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.21004557962!2d50.294993!3d33.457158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f96f3cdb8b6ff2f%3A0x8e9a5b7e4f4e8e0!2z2KfZhNiv2YjYqNmK2Kog2KfZhNi02KfYsdiq2YrYp9mGINin2YTYsdmC2KfYsiDZgdmG2LPZiiDYqNix2KzZitmE2Yc!5e0!3m2!1sfa!2s!4v1699999999999"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+
+  <a class="map-link" href="https://maps.app.goo.gl/zVJJFhJd8wnxLFgx8" target="_blank">
+    باز کردن در گوگل مپ
+  </a>
+
+  <a class="back-btn" href="index.html">⬅ بازگشت به صفحه اصلی</a>
+</body>
+</html>
