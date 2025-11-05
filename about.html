@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>درباره ما</title>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: "Vazirmatn", sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 25px;
+      background: #f5f5f5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+      color: #222;
+    }
+    .back-btn {
+      background: #e0e0e0;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #333;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #d4d4d4;
+    }
+
+    .gallery {
+      position: relative;
+      max-width: 400px;
+      margin: 50px auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      display: none;
+      border-radius: 20px;
+    }
+
+    .gallery img.active {
+      display: block;
+      animation: fade 1s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .caption {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30px;
+      color: green;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .arrow:hover {
+      background: rgba(200, 255, 200, 0.8);
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+    .arrow.right {
+      right: 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <button class="back-btn" onclick="window.location.href='index.html'">⬅ بازگشت</button>
+    <h1>درباره ما</h1>
+  </header>
+
+  <div class="gallery">
+    <span class="arrow left" onclick="prevImage()">&#10094;</span>
+    <img src="atf.png" class="active" alt="دستگاه ATF Clinic">
+    <img src="suction.png" alt="دستگاه ساکشن روغن">
+    <img src="radiator.png" alt="دستگاه رادیاتور شور">
+    <span class="arrow right" onclick="nextImage()">&#10095;</span>
+  </div>
+
+  <div class="caption" id="caption">دستگاه ATF Clinic</div>
+
+  <script>
+    const images = document.querySelectorAll('.gallery img');
+    const caption = document.getElementById('caption');
+    const names = ['دستگاه ATF Clinic', 'دستگاه ساکشن روغن', 'دستگاه رادیاتور شور'];
+    let index = 0;
+
+    function showImage(i) {
+      images.forEach(img => img.classList.remove('active'));
+      images[i].classList.add('active');
+      caption.textContent = names[i];
+    }
+
+    function nextImage() {
+      index = (index + 1) % images.length;
+      showImage(index);
+    }
+
+    function prevImage() {
+      index = (index - 1 + images.length) % images.length;
+      showImage(index);
+    }
+  </script>
+
+</body>
+</html>
