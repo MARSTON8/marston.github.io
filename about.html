@@ -1,143 +1,150 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>درباره ما</title>
-  <style>
-    body {
-      background-color: #fff;
-      font-family: "Vazirmatn", sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 25px;
-      background: #f5f5f5;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    header h1 {
-      font-size: 24px;
-      margin: 0;
-      color: #222;
-    }
-    .back-btn {
-      background: #e0e0e0;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 15px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #333;
-      transition: 0.3s;
-    }
-    .back-btn:hover {
-      background: #d4d4d4;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>درباره ما</title>
 
-    .gallery {
-      position: relative;
-      max-width: 400px;
-      margin: 50px auto;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
-    }
+<!-- فونت وزیر -->
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet">
 
-    .gallery img {
-      width: 100%;
-      height: auto;
-      display: none;
-      border-radius: 20px;
-    }
+<style>
+  body {
+    font-family: 'Vazir', sans-serif;
+    background-color: #fff;
+    color: #222;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
 
-    .gallery img.active {
-      display: block;
-      animation: fade 1s ease-in-out;
-    }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
 
-    @keyframes fade {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+  header h1 {
+    font-size: 22px;
+    margin: 0;
+  }
 
-    .caption {
-      margin-top: 15px;
-      font-size: 18px;
-      color: #333;
-      font-weight: 500;
-    }
+  .back-btn {
+    background: #eee;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 30px;
-      color: green;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      line-height: 45px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .arrow:hover {
-      background: rgba(200, 255, 200, 0.8);
-    }
+  .back-btn:hover {
+    background: #ddd;
+  }
 
-    .arrow.left {
-      left: 10px;
-    }
-    .arrow.right {
-      right: 10px;
-    }
+  .slideshow-container {
+    position: relative;
+    max-width: 340px;
+    margin: 25px auto;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
 
-  </style>
+  .slides {
+    display: none;
+    width: 100%;
+    animation: fade 1s ease-in-out;
+  }
+
+  @keyframes fade {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+  }
+
+  .caption {
+    margin-top: 12px;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  section {
+    max-width: 90%;
+    margin: 25px auto;
+    line-height: 1.9;
+    text-align: justify;
+    direction: rtl;
+  }
+
+  h2 {
+    color: #333;
+    font-size: 20px;
+    margin-top: 22px;
+  }
+
+</style>
 </head>
+
 <body>
 
-  <header>
-    <button class="back-btn" onclick="window.location.href='index.html'">⬅ بازگشت</button>
-    <h1>درباره ما</h1>
-  </header>
+<header>
+  <button class="back-btn" onclick="window.location.href='index.html'">بازگشت</button>
+  <h1>درباره ما</h1>
+</header>
 
-  <div class="gallery">
-    <span class="arrow left" onclick="prevImage()">&#10094;</span>
-    <img src="atf.png" class="active" alt="دستگاه ATF Clinic">
-    <img src="suction.png" alt="دستگاه ساکشن روغن">
-    <img src="radiator.png" alt="دستگاه رادیاتور شور">
-    <span class="arrow right" onclick="nextImage()">&#10095;</span>
-  </div>
+<div class="slideshow-container">
+  <img class="slides" src="atf.png" alt="دستگاه ATF Clinic">
+  <img class="slides" src="suction.png" alt="دستگاه ساکشن روغن">
+  <img class="slides" src="radiator.png" alt="دستگاه رادیاتور شور">
+</div>
+<div class="caption" id="caption">دستگاه ATF Clinic</div>
 
-  <div class="caption" id="caption">دستگاه ATF Clinic</div>
+<section>
+  <h2>ما کی هستیم؟</h2>
+  <p>
+    تعویض روغنی و مکانیکی <b>امیدواری</b> با بیش از ۳۰ سال سابقه کاری در خدمت مردم عزیز شهرستان گلپایگان می‌باشد.
+    این مجموعه در حوزه خودروهای سواری، باری، کاربراتور و انژکتور فعالیت می‌کند و در زمینه تعمیرات انواع موتور، گیربکس و دیفرانسیل خودروهای خارجی و ایرانی
+    با مدیریت <b>عباسعلی امیدواری</b> آماده ارائه خدمات است.
+  </p>
 
-  <script>
-    const images = document.querySelectorAll('.gallery img');
-    const caption = document.getElementById('caption');
-    const names = ['دستگاه ATF Clinic', 'دستگاه ساکشن روغن', 'دستگاه رادیاتور شور'];
-    let index = 0;
+  <h2>چه دستگاه‌هایی داریم؟</h2>
 
-    function showImage(i) {
-      images.forEach(img => img.classList.remove('active'));
-      images[i].classList.add('active');
-      caption.textContent = names[i];
-    }
+  <h3>ATF Clinic</h3>
+  <p>
+    برای تعویض واسکازین و سیالات خودرو به کار می‌رود. این دستگاه مایع قدیمی را تخلیه کرده، سیستم را شستشو داده و سپس مایع جدید را وارد مخزن خودرو می‌کند.
+  </p>
 
-    function nextImage() {
-      index = (index + 1) % images.length;
-      showImage(index);
-    }
+  <h3>ساکشن روغن</h3>
+  <p>
+    برای تعویض روغن و سایر سیالات خودرو استفاده می‌شود، به جز واسکازین. عملکرد آن سریع، دقیق و بدون آلودگی است.
+  </p>
 
-    function prevImage() {
-      index = (index - 1 + images.length) % images.length;
-      showImage(index);
-    }
-  </script>
+  <h3>رادیاتور شور</h3>
+  <p>
+    جهت شستشو و پاکسازی مسیرهای داخلی رادیاتور از رسوبات و آلودگی‌ها به کار می‌رود و موجب بهبود گردش مایع خنک‌کننده و افزایش کارایی سیستم خنک‌کننده می‌شود.
+  </p>
+</section>
+
+<script>
+  let slideIndex = 0;
+  const slides = document.getElementsByClassName("slides");
+  const captionText = document.getElementById("caption");
+  const captions = ["دستگاه ATF Clinic", "دستگاه ساکشن روغن", "دستگاه رادیاتور شور"];
+
+  function showSlides() {
+    for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+    slideIndex++;
+    if (slideIndex > slides.length) slideIndex = 1;
+    slides[slideIndex - 1].style.display = "block";
+    captionText.textContent = captions[slideIndex - 1];
+    setTimeout(showSlides, 15000); // تغییر خودکار هر 15 ثانیه
+  }
+  showSlides();
+</script>
 
 </body>
 </html>
