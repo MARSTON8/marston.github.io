@@ -219,5 +219,151 @@
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) setTheme(savedTheme);
   </script>
+<!-- ====== MUSIC WIDGET (paste this before </body> in index.html) ====== -->
+<style>
+/* widget styles (minimal, responsive) */
+#music-widget{position:fixed;right:18px;bottom:18px;z-index:9999;font-family: Vazir, sans-serif}
+.music-toggle{width:64px;height:64px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.45);cursor:pointer;color:#fff}
+.music-toggle img{width:34px;height:34px}
+.music-panel{position:absolute;right:0;bottom:82px;width:320px;max-width:calc(100vw - 36px);background:#111;color:#fff;border-radius:12px;padding:10px;box-shadow:0 18px 50px rgba(0,0,0,.5);transform-origin:bottom right;opacity:0;visibility:hidden;transition:all .25s}
+.music-panel.show{opacity:1;visibility:visible;transform:translateY(0)}
+.music-row{display:flex;align-items:center;gap:10px}
+.music-cover{width:56px;height:56px;border-radius:8px;background:#222;display:flex;align-items:center;justify-content:center}
+.music-meta{flex:1;text-align:left}
+.track-title{font-weight:700;font-size:15px;margin:0}
+.track-artist{font-size:13px;color:#ddd;margin:0}
+.controls{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px}
+.ctrl-btn{background:transparent;border:0;color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:18px}
+.progress{height:6px;background:rgba(255,255,255,0.12);border-radius:6px;margin-top:12px;overflow:hidden}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);width:0%}
+.badge-live{display:inline-block;background:#ff3b30;color:#fff;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;margin-right:6px}
+@media (max-width:460px){ .music-panel{width:92%;right:6px;bottom:78px} .music-cover{width:48px;height:48px} .music-toggle{width:56px;height:56px} }
+</style>
+
+<div id="music-widget" aria-hidden="false">
+  <div class="music-toggle" id="musicToggle" title="پخش‌کننده موسیقی">
+    <img src="https://img.icons8.com/?size=100&id=9P70tJJKRpAo&format=png&color=ffffff" alt="music">
+  </div>
+
+  <div class="music-panel" id="musicPanel" role="region" aria-label="پخش‌کننده موسیقی">
+    <div class="music-row">
+      <div class="music-cover" id="musicCover">🎵</div>
+      <div class="music-meta">
+        <p class="track-title" id="trackTitle">--</p>
+        <p class="track-artist" id="trackArtist">--</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn" id="prevBtn" title="قبلی">⏮</button>
+      <button class="ctrl-btn" id="playBtn" title="پخش/توقف">▶</button>
+      <button class="ctrl-btn" id="nextBtn" title="بعدی">⏭</button>
+      <span class="badge-live" id="liveBadge" style="display:none">زنده</span>
+    </div>
+
+    <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#ccc">
+      <span id="timeCurrent">0:00</span><span id="timeTotal">0:00</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // --- playlist: put your uploaded files (in music/ folder) here ---
+  const playlist = [
+    { title: "خونه", artist: "معین", url: "https://marston8.github.io/marston.github.io/music/moein-khoone.mp3" },
+    { title: "محراب", artist: "جواد یساری", url: "https://marston8.github.io/marston.github.io/music/javadyasari-mehrab.mp3" },
+    { title: "فرنگیس", artist: "سیاوش", url: "https://marston8.github.io/marston.github.io/music/siavash-farangis.mp3" }
+  ];
+  // -----------------------------------------------------------------
+
+  const toggle = document.getElementById('musicToggle');
+  const panel = document.getElementById('musicPanel');
+  const playBtn = document.getElementById('playBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const titleEl = document.getElementById('trackTitle');
+  const artistEl = document.getElementById('trackArtist');
+  const progressBar = document.getElementById('progressBar');
+  const timeCurrent = document.getElementById('timeCurrent');
+  const timeTotal = document.getElementById('timeTotal');
+  const liveBadge = document.getElementById('liveBadge');
+
+  // audio
+  let audio = new Audio();
+  audio.preload = "metadata";
+  audio.crossOrigin = "anonymous";
+  let idx = Number(localStorage.getItem('player_idx') || 0);
+  let playing = false;
+
+  function loadTrack(i){
+    idx = (i + playlist.length) % playlist.length;
+    localStorage.setItem('player_idx', idx);
+    audio.src = playlist[idx].url;
+    titleEl.textContent = playlist[idx].title;
+    artistEl.textContent = playlist[idx].artist;
+    // hide live badge (we're playing local tracks) — if using live stream set true
+    liveBadge.style.display = 'none';
+    audio.load();
+  }
+
+  function play(){
+    audio.play().then(()=> {
+      playing = true;
+      playBtn.textContent = '⏸';
+      toggle.classList.add('playing');
+    }).catch(err=>{
+      // autoplay block: user must interact
+      console.warn('پخش خودکار بلاک شد:', err);
+      playing = false;
+      playBtn.textContent = '▶';
+      panel.classList.add('show');
+    });
+  }
+  function pause(){ audio.pause(); playing=false; playBtn.textContent='▶'; toggle.classList.remove('playing'); }
+
+  playBtn.addEventListener('click', ()=>{
+    if(!audio.src) loadTrack(idx);
+    if(playing) pause(); else play();
+  });
+  prevBtn.addEventListener('click', ()=>{ loadTrack(idx-1); if(playing) play(); });
+  nextBtn.addEventListener('click', ()=>{ loadTrack(idx+1); if(playing) play(); });
+
+  // time update
+  audio.addEventListener('timeupdate', ()=>{
+    if(audio.duration){ 
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = pct + '%';
+      timeCurrent.textContent = formatTime(audio.currentTime);
+      timeTotal.textContent = formatTime(audio.duration);
+    }
+  });
+  audio.addEventListener('ended', ()=>{ loadTrack(idx+1); play(); });
+
+  function formatTime(s){
+    const m = Math.floor(s/60); const sec = Math.floor(s%60).toString().padStart(2,'0');
+    return m + ':' + sec;
+  }
+
+  // toggle panel
+  toggle.addEventListener('click', ()=>{ panel.classList.toggle('show'); });
+
+  // click outside closes
+  document.addEventListener('click', (e)=>{
+    if(!e.target.closest('#music-widget')) panel.classList.remove('show');
+  });
+
+  // init
+  loadTrack(idx);
+  // if previously playing, don't autoplay (browser policy) but UI reflects selected track
+  if(localStorage.getItem('player_playing')==='1'){ /* user had been playing before */ }
+
+  // Save playing state
+  window.addEventListener('beforeunload', ()=> localStorage.setItem('player_playing', playing ? '1' : '0') );
+
+})();
+</script>
+<!-- ====== END MUSIC WIDGET ====== -->
 </body>
 </html>
