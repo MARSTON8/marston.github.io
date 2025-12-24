@@ -1,174 +1,79 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<title>کی بازیم؟</title>
+<!-- ساعت کاری مغازه -->
+<div id="work-clock-card" style="width:300px; margin:auto; text-align:center; font-family:Tahoma, sans-serif;">
+    <h2 style="margin-bottom:10px;">ساعت کاری مغازه</h2>
 
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-
-<style>
-body{
-    font-family: Vazirmatn, sans-serif;
-    background:#fff;
-    margin:0;
-    padding:20px;
-    text-align:center;
-}
-h1{
-    font-size:28px;
-    margin-bottom:20px;
-}
-.clock-box{
-    max-width:360px;
-    margin:0 auto;
-    padding:20px;
-    border-radius:16px;
-    box-shadow:0 8px 20px rgba(0,0,0,.1);
-}
-.analog{
-    width:200px;
-    height:200px;
-    border:8px solid #333;
-    border-radius:50%;
-    margin:0 auto 20px;
-    position:relative;
-}
-.hand{
-    position:absolute;
-    width:50%;
-    height:2px;
-    background:#333;
-    top:50%;
-    transform-origin:100%;
-}
-.digital{
-    font-size:22px;
-    margin:10px 0;
-}
-.date{
-    font-size:16px;
-    color:#555;
-}
-.status{
-    margin-top:15px;
-    font-size:20px;
-    font-weight:bold;
-}
-.status.open{color:green;}
-.status.closed{color:red;}
-.countdown{
-    margin-top:8px;
-    font-size:14px;
-}
-</style>
-</head>
-
-<body>
-
-<h1>کی بازیم؟</h1>
-
-<div class="clock-box">
-
-    <div class="analog">
-        <div id="hour" class="hand"></div>
-        <div id="minute" class="hand"></div>
-        <div id="second" class="hand" style="background:red"></div>
+    <!-- ساعت عقربه‌ای -->
+    <div id="analog-clock" style="position:relative; width:200px; height:200px; margin:auto; border:4px solid #000; border-radius:50%; background:#fff;">
+        <div class="hand hour" style="width:6px; height:50px; background:#000; position:absolute; bottom:50%; left:50%; transform-origin:50% 100%; transform:rotate(0deg);"></div>
+        <div class="hand minute" style="width:4px; height:70px; background:#000; position:absolute; bottom:50%; left:50%; transform-origin:50% 100%; transform:rotate(0deg);"></div>
+        <div class="hand second" style="width:2px; height:90px; background:red; position:absolute; bottom:50%; left:50%; transform-origin:50% 100%; transform:rotate(0deg);"></div>
+        <div style="width:12px; height:12px; background:#000; border-radius:50%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);"></div>
     </div>
 
-    <div id="digital" class="digital"></div>
-    <div id="date" class="date"></div>
-
-    <div id="status" class="status"></div>
-    <div id="countdown" class="countdown"></div>
-
+    <!-- ساعت دیجیتال و تاریخ -->
+    <div id="digital-clock" style="margin-top:10px; font-size:18px;"></div>
+    <div id="date-display" style="margin-top:5px; font-size:16px; color:#555;"></div>
+    <div id="shop-status" style="margin-top:8px; font-size:16px; font-weight:bold;"></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/jalali.js"></script>
 <script>
-const daysFa = ["یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه","شنبه"];
+dayjs.extend(window.dayjs_plugin_jalali);
 
-function isSummer(month){
-    return month >= 3 && month <= 8; // بهار و تابستان
+function updateClock() {
+    const now = dayjs();
+    const hour = now.hour();
+    const minute = now.minute();
+    const second = now.second();
+    const month = now.jMonth() + 1; // شمسی
+    const day = now.jDate();
+    const weekday = now.format('dddd');
+    const year = now.jYear();
+
+    // بروزرسانی ساعت دیجیتال
+    document.getElementById('digital-clock').innerText = now.format('HH:mm:ss');
+
+    // بروزرسانی تاریخ شمسی
+    document.getElementById('date-display').innerText = ${weekday} ${day} ${month} ${year};
+
+    // ساعت کاری مغازه بر اساس فصل و روز
+    const season = (month >= 1 && month <= 3) ? 'زمستان و پاییز' : 'بهار و تابستان'; // ساده‌سازی
+    const dayOfWeek = now.day(); // یکشنبه=0 ... شنبه=6
+    let openHourStart, openHourEnd;
+
+    if(dayOfWeek === 5) { // جمعه تعطیل
+        document.getElementById('shop-status').innerText = 'تعطیل';
+        document.getElementById('shop-status').style.color = 'red';
+    } else {
+        if(season === 'بهار و تابستان') {
+            openHourStart = 9; 
+            openHourEnd = (hour < 12 ? 13 : 20.5); // بعد ظهر 4 تا 8:30
+        } else {
+            openHourStart = 9; 
+            openHourEnd = (hour < 12 ? 13 : 19.5); // بعد ظهر 4 تا 7:30
+        }
+
+        let statusText = '';
+        if(hour + minute/60 >= openHourStart && hour + minute/60 <= openHourEnd){
+            document.getElementById('shop-status').innerText = 'باز هستیم';
+            document.getElementById('shop-status').style.color = 'green';
+        } else {
+            document.getElementById('shop-status').innerText = 'تا باز شدن مغازه باقی مانده';
+            document.getElementById('shop-status').style.color = 'red';
+        }
+    }
+
+    // بروزرسانی عقربه‌ها
+    const hourDeg = ((hour % 12) + minute/60) * 30;
+    const minDeg = (minute + second/60) * 6;
+    const secDeg = second * 6;
+
+    document.querySelector('.hand.hour').style.transform = rotate(${hourDeg}deg);
+    document.querySelector('.hand.minute').style.transform = rotate(${minDeg}deg);
+    document.querySelector('.hand.second').style.transform = rotate(${secDeg}deg);
 }
 
-function updateClock(){
-    const now = new Date();
-    const h = now.getHours();
-    const m = now.getMinutes();
-    const s = now.getSeconds();
-    const day = now.getDay();
-    const month = now.getMonth();
-
-    // عقربه‌ها
-    document.getElementById("hour").style.transform =
-        `rotate(${(h%12)*30 + m/2}deg)`;
-    document.getElementById("minute").style.transform =
-        `rotate(${m*6}deg)`;
-    document.getElementById("second").style.transform =
-        `rotate(${s*6}deg)`;
-
-    // دیجیتال
-    document.getElementById("digital").innerText =
-        `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-
-    // تاریخ
-    document.getElementById("date").innerText =
-        `${daysFa[day]}`;
-
-    const statusEl = document.getElementById("status");
-    const cdEl = document.getElementById("countdown");
-
-    // جمعه تعطیل
-    if(day === 5){
-        statusEl.className = "status closed";
-        statusEl.innerText = "تعطیل هستیم";
-        cdEl.innerText = "تا بازگشایی: ۱ روز";
-        return;
-    }
-
-    let openTimes = [
-        [9,0,13,0]
-    ];
-
-    if(isSummer(month)){
-        openTimes.push([16,0,20,30]);
-    }else{
-        openTimes.push([16,0,19,30]);
-    }
-
-    let isOpen = false;
-    let nextEvent = null;
-
-    openTimes.forEach(t=>{
-        const start = new Date(now);
-        start.setHours(t[0],t[1],0);
-        const end = new Date(now);
-        end.setHours(t[2],t[3],0);
-
-        if(now >= start && now <= end){
-            isOpen = true;
-            nextEvent = end;
-        }
-        if(now < start && !nextEvent){
-            nextEvent = start;
-        }
-    });
-
-    if(isOpen){
-        statusEl.className = "status open";
-        statusEl.innerText = "باز هستیم";
-        const diff = Math.floor((nextEvent-now)/1000);
-        cdEl.innerText = `تا تعطیلی: ${Math.floor(diff/60)} دقیقه`;
-    }else{
-        statusEl.className = "status closed";
-        statusEl.innerText = "تعطیل هستیم";
-        const diff = Math.floor((nextEvent-now)/1000);
-        cdEl.innerText = `تا بازگشایی: ${Math.floor(diff/60)} دقیقه`;
-    }
-}
-
-setInterval(updateClock,1000);
+setInterval(updateClock, 1000);
 updateClock();
 </script>
-
-</body>
-</html>
