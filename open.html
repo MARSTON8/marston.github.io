@@ -1,8 +1,691 @@
-{
-  "data": {
-    "arguments": {
-      "code": "import arabic_reshaper\nfrom bidi.algorithm import get_display\n\ndef apply_bidi_and_reshaper(text):\n    return get_display(arabic_reshaper.reshape(text))\n\nhtml_content = \"\"\"\n<!DOCTYPE html>\n<html lang=\"fa\" dir=\"rtl\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>ساعت کاری مغازه</title>\n    <style>\n        @font-face {\n            font-family: 'Vazirmatn';\n            src: url('Vazirmatn-Regular.woff2') format('woff2'),\n                 url('Vazirmatn-Bold.woff2') format('woff2');\n            font-weight: normal;\n            font-style: normal;\n        }\n\n        body {\n            font-family: 'Vazirmatn', sans-serif;\n            background-color: #f4f4f4;\n            margin: 0;\n            padding: 20px;\n            color: #333;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            min-height: 100vh;\n            box-sizing: border-box;\n        }\n\n        .header {\n            width: 100%;\n            max-width: 1200px;\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n            padding: 15px 30px;\n            background-color: #ffffff;\n            box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n            margin-bottom: 30px;\n            border-radius: 8px;\n        }\n\n        .header-title {\n            font-size: 1.5em;\n            font-weight: bold;\n            color: #e67e22; /* Example color for the main title */\n        }\n\n        .header-nav a {\n            color: #333;\n            text-decoration: none;\n            margin-left: 25px;\n            font-size: 0.95em;\n            transition: color 0.3s ease;\n            padding: 8px 15px;\n            border-radius: 5px;\n        }\n\n        .header-nav a:hover {\n            color: #e67e22;\n            background-color: #f0f0f0;\n        }\n\n        .header-nav a.active {\n            background-color: #ffd700; /* Goldenrod for active */\n            color: #333;\n            font-weight: bold;\n        }\n\n        .hero {\n            text-align: center;\n            margin-bottom: 40px;\n            max-width: 800px;\n        }\n\n        .hero-title {\n            font-size: 3em;\n            font-weight: bold;\n            margin-bottom: 15px;\n            color: #333;\n        }\n\n        .hero-subtitle {\n            font-size: 1.1em;\n            color: #555;\n            line-height: 1.6;\n        }\n\n        .card-container {\n            display: flex;\n            flex-wrap: wrap;\n            justify-content: center;\n            gap: 25px;\n            width: 100%;\n            max-width: 1200px;\n            margin-top: 20px;\n        }\n\n        .card {\n            background-color: #fff;\n            border-radius: 12px;\n            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);\n            padding: 30px;\n            text-align: center;\n            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;\n            opacity: 0;\n            animation: fadeIn 1s forwards;\n            flex: 1;\n            min-width: 280px;\n            box-sizing: border-box;\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n        }\n\n        .card:hover {\n            transform: translateY(-10px);\n            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);\n        }\n\n        .clock-card {\n            min-width: 350px;\n            padding: 40px;\n        }\n\n        .digit-clock {\n            font-size: 7em;\n            font-weight: bold;\n            color: #333;\n            letter-spacing: 5px;\n            margin-bottom: 10px;\n            text-shadow: 0 0 10px rgba(0,0,0,0.1);\n        }\n\n        .date-card {\n            min-width: 300px;\n        }\n\n        .date-card i {\n            font-size: 2em;\n            margin-left: 10px;\n            vertical-align: middle;\n        }\n\n        .date-card span {\n            font-size: 1.4em;\n            font-weight: bold;\n            vertical-align: middle;\n        }\n\n        .status-card {\n            min-width: 300px;\n        }\n\n        .status-card .icon {\n            font-size: 2.5em;\n            margin-bottom: 15px;\n        }\n\n        .status-card .status-text {\n            font-size: 1.8em;\n            font-weight: bold;\n            margin-bottom: 10px;\n        }\n\n        .status-card .status-detail {\n            font-size: 0.95em;\n            color: #666;\n        }\n\n        .status-open {\n            color: #2ecc71; /* Green */\n        }\n\n        .status-closed {\n            color: #e74c3c; /* Red */\n        }\n\n        .countdown-card {\n            min-width: 400px;\n        }\n\n        .countdown-card .title {\n            font-size: 1.4em;\n            font-weight: bold;\n            margin-bottom: 15px;\n            color: #555;\n        }\n\n        .countdown-card .timer {\n            font-size: 2.5em;\n            font-weight: bold;\n            color: #333;\n        }\n\n        .countdown-card .timer span {\n            margin: 0 5px;\n        }\n\n        .warning {\n            background-color: #f1c40f; /* Yellow */\n            color: #333;\n            padding: 15px;\n            border-radius: 8px;\n            font-weight: bold;\n            margin-top: 20px;\n            margin-bottom: 20px;\n            width: 100%;\n            max-width: 700px;\n            text-align: center;\n            animation: pulse 2s infinite;\n        }\n\n        .hours-card-container {\n            display: flex;\n            flex-wrap: wrap;\n            justify-content: center;\n            gap: 20px;\n            margin-top: 30px;\n            width: 100%;\n            max-width: 1100px;\n        }\n\n        .hours-card {\n            background-color: #fff;\n            border-radius: 10px;\n            box-shadow: 0 3px 10px rgba(0,0,0,0.08);\n            padding: 20px 25px;\n            text-align: center;\n            transition: transform 0.3s ease, box-shadow 0.3s ease;\n            flex: 1;\n            min-width: 250px;\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n        }\n\n        .hours-card:hover {\n            transform: translateY(-5px);\n            box-shadow: 0 6px 15px rgba(0,0,0,0.12);\n        }\n\n        .hours-card .icon {\n            font-size: 2em;\n            margin-bottom: 10px;\n        }\n\n        .hours-card .title {\n            font-size: 1.2em;\n            font-weight: bold;\n            margin-bottom: 5px;\n        }\n\n        .hours-card .times {\n            font-size: 0.95em;\n            color: #555;\n        }\n\n        .footer {\n            text-align: center;\n            margin-top: 50px;\n            padding: 20px;\n            width: 100%;\n            background-color: #ffffff;\n            color: #777;\n            font-size: 0.9em;\n            border-top: 1px solid #eee;\n        }\n\n        @keyframes fadeIn {\n            from { opacity: 0; transform: translateY(20px); }\n            to { opacity: 1; transform: translateY(0); }\n        }\n\n        @keyframes pulse {\n            0% { transform: scale(1); opacity: 1; }\n            50% { transform: scale(1.02); opacity: 0.9; }\n            100% { transform: scale(1); opacity: 1; }\n        }\n\n        /* Responsive adjustments */\n        @media (max-width: 768px) {\n            .header {\n                flex-direction: column;\n                padding: 15px;\n            }\n            .header-nav {\n                margin-top: 15px;\n                display: flex;\n                flex-wrap: wrap;\n                justify-content: center;\n            }\n            .header-nav a {\n                margin: 5px;\n                font-size: 0.85em;\n            }\n            .hero-title {\n                font-size: 2.5em;\n            }\n            .hero-subtitle {\n                font-size: 1em;\n            }\n            .card {\n                min-width: 250px;\n                padding: 20px;\n            }\n            .digit-clock {\n                font-size: 5em;\n            }\n            .clock-card, .countdown-card, .hours-card-container {\n                min-width: auto;\n                width: 100%;\n            }\n            .hours-card {\n                min-width: 200px;\n            }\n        }\n    </style>\n</head>\n<body>\n\n    <div class=\"header\">\n        <div class=\"header-title\">تعویض روغنی و مکانیکی امیدواری</div>\n        <nav class=\"header-nav\">\n            <a href=\"index.html\">صفحه اصلی</a>\n            <a href=\"about.html\">درباره ما</a>\n            <a href=\"oil.html\">چه نوع روغنی داخل موتور بریزم؟</a>\n            <a href=\"reservation.html\">رزرو وقت</a>\n            <a href=\"open.html\" class=\"active\">ساعت کاری مغازه</a>\n        </nav>\n    </div>\n\n    <div class=\"hero\">\n        <div class=\"hero-title\">ساعت کاری مغازه</div>\n        <div class=\"hero-subtitle\">در هر لحظه وضعیت باز یا بسته بودن مغازه و زمان باقی‌مانده تا تغییر وضعیت را مشاهده کنید.</div>\n    </div>\n\n    <div class=\"card-container\">\n        <div class=\"card clock-card\">\n            <div id=\"digit-clock\" class=\"digit-clock\">--:--:--</div>\n        </div>\n\n        <div class=\"card date-card\">\n            <i class=\"fas fa-calendar-alt\"></i> <!-- Font Awesome icon, you might need to include the library -->\n            <span id=\"current-date\"></span>\n        </div>\n\n        <div class=\"card status-card\">\n            <div id=\"status-icon\" class=\"icon\"></div>\n            <div id=\"status-text\" class=\"status-text\"></div>\n            <div id=\"status-detail\" class=\"status-detail\"></div>\n        </div>\n    </div>\n\n    <div id=\"warning-message\" class=\"warning\" style=\"display: none;\"></div>\n\n    <div class=\"card-container\">\n        <div class=\"card countdown-card\">\n            <div id=\"countdown-title\" class=\"title\"></div>\n            <div id=\"countdown-timer\" class=\"timer\">--:--:--</div>\n        </div>\n    </div>\n\n    <div class=\"hours-card-container\">\n        <div class=\"hours-card\">\n            <div class=\"icon\">🌸</div>\n            <div class=\"title\">بهار و تابستان</div>\n            <div class=\"times\">۹:۰۰ تا ۱۳:۰۰<br>۱۶:۰۰ تا ۲۰:۳۰</div>\n        </div>\n        <div class=\"hours-card\">\n            <div class=\"icon\">🍂</div>\n            <div class=\"title\">پاییز و زمستان</div>\n            <div class=\"times\">۹:۰۰ تا ۱۳:۰۰<br>۱۶:۰۰ تا ۱۹:۳۰</div>\n        </div>\n        <div class=\"hours-card\">\n            <div class=\"icon\">📅</div>\n            <div class=\"title\">تعطیلات</div>\n            <div class=\"times\">جمعه‌ها تعطیل</div>\n        </div>\n    </div>\n\n    <footer class=\"footer\">\n        زمان بر اساس ساعت رسمی ایران است.\n    </footer>\n\n    <script>\n        const persianMonths = [\n            \"فروردین\", \"اردیبهشت\", \"خرداد\", \"تیر\", \"مرداد\", \"شهریور\", \n            \"مهر\", \"آبان\", \"آذر\", \"دی\", \"بهمن\", \"اسفند\"\n        ];\n        const persianDays = [\n            \"شنبه\", \"یکشنبه\", \"دوشنبه\", \"سه‌شنبه\", \"چهارشنبه\", \"پنجشنبه\", \"جمعه\"\n        ];\n\n        const shopOpeningTimeMorning = { hour: 9, minute: 0 };\n        const shopClosingTimeAfternoonSummer = { hour: 20, minute: 30 };\n        const shopClosingTimeAfternoonWinter = { hour: 19, minute: 30 };\n\n        function formatPersianDate(date) {\n            const options = {\n                year: 'numeric',\n                month: 'long',\n                day: 'numeric',\n                weekday: 'long'\n            };\n            // Use Intl.DateTimeFormat for Persian date\n            return new Intl.DateTimeFormat('fa-IR-u-ca-persian', options).format(date);\n        }\n\n        function getCurrentStatus() {\n            const now = new Date();\n            const dayOfWeek = now.getDay(); // 0 for Sunday, 6 for Saturday in JS (but we'll map it)\n            const currentHour = now.getHours(); \n            const currentMinute = now.getMinutes();\n\n            // Adjusting JS day to match Persian days (0=Saturday, 6=Friday)\n            const jsDayToPersian = [6, 0, 1, 2, 3, 4, 5]; // 0(Sun)->6, 1(Mon)->0 etc. No, this is wrong.\n            // JS: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat\n            // We want: 0=Sat, 1=Sun, 2=Mon, 3=Tue, 4=Wed, 5=Thu, 6=Fri\n            const adjustedDayOfWeek = (dayOfWeek === 0) ? 6 : dayOfWeek - 1; // Saturday is 6, Sunday is 0, etc.\n\n            const isFriday = adjustedDayOfWeek === 6;\n            const isThursdayEvening = adjustedDayOfWeek === 4 && currentHour >= shopOpeningTimeMorning.hour; // If it's Thursday and past opening time, consider it "evening"\n\n            let isOpen = false;\n            let closingTime = null;\n            let openingTime = null;\n\n            if (isFriday) {\n                isOpen = false;\n            } else {\n                openingTime = new Date(now);\n                openingTime.setHours(shopOpeningTimeMorning.hour, shopOpeningTimeMorning.minute, 0, 0);\n\n                const month = now.getMonth(); // 0-11\n                const isSummer = month >= 3 && month <= 8; // April to September (Persian: 1 to 6) -> needs correction based on Persian calendar logic later\n                \n                let afternoonClosingHour, afternoonClosingMinute;\n                // Logic for season needs Persian calendar implementation, for now using a simplified month check\n                // Persian Months: Farvardin(0) to Shahrivar(5) = Spring/Summer\n                // Mehr(6) to Esfand(11) = Autumn/Winter\n                if (month >= 3 && month <= 8) { // Approx. April to September\n                    afternoonClosingHour = shopClosingTimeAfternoonSummer.hour;\n                    afternoonClosingMinute = shopClosingTimeAfternoonSummer.minute;\n                } else {\n                    afternoonClosingHour = shopClosingTimeAfternoonWinter.hour;\n                    afternoonClosingMinute = shopClosingTimeAfternoonWinter.minute;\n                }\n\n                const closingTimeAfternoon = new Date(now);\n                closingTimeAfternoon.setHours(afternoonClosingHour, afternoonClosingMinute, 0, 0);\n\n                if (currentHour >= shopOpeningTimeMorning.hour && currentHour < afternoonClosingHour) {\n                    // Check morning shift\n                    if (currentHour < shopOpeningTimeMorning.hour || (currentHour === shopOpeningTimeMorning.hour && currentMinute < shopOpeningTimeMorning.minute)) {\n                         // Before morning opening\n                    } else {\n                        isOpen = true;\n                        closingTime = closingTimeAfternoon;\n                    }\n                } else if (currentHour >= afternoonClosingHour) {\n                     // After afternoon closing\n                     isOpen = false;\n                } else if (currentHour < shopOpeningTimeMorning.hour) {\n                    // Before morning opening\n                    isOpen = false;\n                }\n            }\n\n            // Handle Thursday evening special case for countdown\n            const isThursdayEveningForCountdown = adjustedDayOfWeek === 4 && currentHour >= shopClosingTimeAfternoonWinter.hour;\n\n            return {\n                isOpen: isOpen,\n                closingTime: closingTime,\n                openingTime: openingTime,\n                isFriday: isFriday,\n                isThursdayEveningForCountdown: isThursdayEveningForCountdown\n            };\n        }\n\n        function updateUI() {\n            const now = new Date();\n            const clockElement = document.getElementById('digit-clock');\n            const dateElement = document.getElementById('current-date');\n            const statusIconElement = document.getElementById('status-icon');\n            const statusTextElement = document.getElementById('status-text');\n            const statusDetailElement = document.getElementById('status-detail');\n            const countdownTitleElement = document.getElementById('countdown-title');\n            const countdownTimerElement = document.getElementById('countdown-timer');\n            const warningMessageElement = document.getElementById('warning-message');\n\n            // Update Clock and Date\n            clockElement.textContent = now.toLocaleTimeString('fa-IR');\n            dateElement.textContent = formatPersianDate(now);\n\n            // Update Status\n            const status = getCurrentStatus();\n\n            if (status.isFriday) {\n                statusIconElement.innerHTML = '<i class=\"fas fa-times-circle\"></i>';\n                statusTextElement.textContent = 'تعطیل هستیم';\n                statusTextElement.className = 'status-text status-closed';\n                statusDetailElement.textContent = 'امروز جمعه است.';\n                countdownTitleElement.textContent = 'تا بازگشایی مغازه';\n            } else if (status.isOpen) {\n                statusIconElement.innerHTML = '<i class=\"fas fa-check-circle\"></i>';\n                statusTextElement.textContent = 'باز هستیم';\n                statusTextElement.className = 'status-text status-open';\n                statusDetailElement.textContent = 'مغازه در حال حاضر باز است.';\n                countdownTitleElement.textContent = 'تا تعطیلی مغازه';\n            } else {\n                statusIconElement.innerHTML = '<i class=\"fas fa-times-circle\"></i>';\n                statusTextElement.textContent = 'تعطیل هستیم';\n                statusTextElement.className = 'status-text status-closed';\n                statusDetailElement.textContent = 'مغازه در حال حاضر تعطیل است.';\n                countdownTitleElement.textContent = 'تا بازگشایی مغازه';\n            }\n\n            // Update Countdown\n            let targetTime = null;\n            let timeUntil = 0;\n            let isWarning = false;\n            let isFridayCountdown = false;\n            let isThursdayEveningCountdown = false;\n\n            if (status.isFriday) {\n                // Countdown to Saturday 9 AM\n                targetTime = new Date();\n                targetTime.setDate(targetTime.getDate() + 1); // Tomorrow\n                targetTime.setHours(9, 0, 0, 0);\n                isFridayCountdown = true;\n            } else if (status.isOpen && status.closingTime) {\n                targetTime = status.closingTime;\n                timeUntil = targetTime.getTime() - now.getTime();\n                if (timeUntil < 0) timeUntil = 0; // Should not happen if logic is correct\n                if (timeUntil < 30 * 60 * 1000) { // Less than 30 minutes\n                    isWarning = true;\n                }\n            } else if (!status.isOpen) {\n                // Countdown to next opening time\n                if (status.isThursdayEveningForCountdown) {\n                    // Special case: Thursday evening, countdown to Saturday 9 AM\n                    targetTime = new Date();\n                    targetTime.setDate(targetTime.getDate() + 2); // Saturday\n                    targetTime.setHours(9, 0, 0, 0);\n                    isThursdayEveningCountdown = true;\n                } else if (status.openingTime) {\n                    targetTime = status.openingTime;\n                    // If opening time is already passed today, set for tomorrow\n                    if (targetTime < now) {\n                        targetTime.setDate(targetTime.getDate() + 1);\n                    }\n                    timeUntil = targetTime.getTime() - now.getTime();\n                    if (timeUntil < 0) timeUntil = 0;\n                }\n            }\n\n            if (targetTime) {\n                const seconds = Math.floor((timeUntil / 1000) % 60);\n                const minutes = Math.floor((timeUntil / 1000 / 60) % 60);\n                const hours = Math.floor((timeUntil / 1000 / 3600) % 24);\n                const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));\n\n                let displayTime = '';\n                if (days > 0) displayTime += `${days} روز `;\n                if (hours > 0 || days > 0 || isFridayCountdown || isThursdayEveningCountdown) displayTime += `${hours} ساعت `;\n                if (minutes > 0 || hours > 0 || days > 0 || isFridayCountdown || isThursdayEveningCountdown) displayTime += `${minutes} دقیقه `;\n                displayTime += `${seconds} ثانیه`;\n\n                countdownTimerElement.textContent = displayTime;\n            } else {\n                countdownTimerElement.textContent = '--:--:--';\n            }\n\n            // Show/Hide Warning Message\n            if (isWarning) {\n                warningMessageElement.style.display = 'block';\n                warningMessageElement.textContent = '⚠️ کمتر از ۳۰ دقیقه تا تعطیلی مغازه باقی مانده است.';\n            } else {\n                warningMessageElement.style.display = 'none';\n            }\n        }\n\n        // Initial UI update and set interval for real-time updates\n        updateUI();\n        setInterval(updateUI, 1000);\n\n        // Apply Persian text styling (if needed for specific elements not handled by dir='rtl')\n        // document.querySelectorAll('.header-title, .hero-title, .hero-subtitle, .status-text, .countdown-title, .title, .times').forEach(el => {\n        //     el.innerHTML = get_display(arabic_reshaper.reshape(el.innerHTML));\n        // });\n\n    </script>\n\n</body>\n</html>\n\"\n\n# Save the HTML content to a file\nwith open(\"[/mnt/data/open.html\"](https://storage.gapgpt.app/media/code_interpreter/d73e79ff-70eb-4bfd-90dc-fbe966973873/open.html%5C%22), \"w\", encoding=\"utf-8\") as f:\n    f.write(html_content)\n\nprint(f\"File saved to [/mnt/data/open.html\"](https://storage.gapgpt.app/media/code_interpreter/d73e79ff-70eb-4bfd-90dc-fbe966973873/open.html%5C%22))\n"
-    },
-    "tool_name": "python"
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ساعت کاری مغازه - تعویض روغنی و مکانیکی امیدواری</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== ریست و پایه ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a227;
+      --gold-light: #f5e9c0;
+      --gold-border: #e2c46a;
+      --green: #2e7d32;
+      --green-light: #e8f5e9;
+      --green-mid: #4caf50;
+      --red: #c62828;
+      --red-light: #ffebee;
+      --yellow: #f57f17;
+      --yellow-light: #fff8e1;
+      --bg: #f7f8fa;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+      --radius: 18px;
+      --radius-sm: 12px;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ===== هدر ===== */
+    header {
+      background: #fff;
+      border-bottom: 1px solid #eeeeee;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-brand {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13.5px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { background: #f3f4f6; }
+
+    nav a.active {
+      background: var(--gold-light);
+      color: #8a6a00;
+      border: 1.5px solid var(--gold-border);
+      font-weight: 700;
+    }
+
+    /* ===== محتوای اصلی ===== */
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== هیرو ===== */
+    .hero {
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* ===== کارت‌ها ===== */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 28px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.11);
+    }
+
+    /* ===== کارت ساعت دیجیتال ===== */
+    .clock-card {
+      text-align: center;
+      padding: 28px 20px;
+    }
+
+    #digital-clock {
+      font-family: 'Courier New', 'DS-Digital', monospace;
+      font-size: clamp(52px, 14vw, 88px);
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 6px;
+      line-height: 1;
+    }
+
+    /* ===== کارت تاریخ ===== */
+    .date-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 28px;
+    }
+
+    .date-card .cal-icon { font-size: 22px; }
+
+    #persian-date {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ===== کارت وضعیت ===== */
+    .status-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 28px;
+    }
+
+    .status-card.open   { background: var(--green-light); border: 1.5px solid #a5d6a7; }
+    .status-card.closed { background: var(--red-light);   border: 1.5px solid #ef9a9a; }
+    .status-card.friday { background: var(--red-light);   border: 1.5px solid #ef9a9a; }
+
+    .status-text h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .status-card.open   .status-text h2 { color: var(--green); }
+    .status-card.closed .status-text h2 { color: var(--red); }
+    .status-card.friday .status-text h2 { color: var(--red); }
+
+    .status-text p { font-size: 14px; color: var(--text-muted); }
+
+    .status-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .status-card.open   .status-icon { background: var(--green-mid); color: #fff; }
+    .status-card.closed .status-icon { background: var(--red);        color: #fff; }
+    .status-card.friday .status-icon { background: var(--red);        color: #fff; }
+
+    /* ===== کارت شمارش معکوس ===== */
+    .countdown-card { padding: 22px 28px; position: relative; }
+
+    .countdown-card .cd-label {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .countdown-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .countdown-numbers {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .cd-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .cd-value {
+      font-size: clamp(20px, 5vw, 28px);
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .cd-value.closed-color { color: #1565c0; }
+
+    .cd-unit-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .cd-sep {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 14px;
+      align-self: flex-start;
+      padding-top: 2px;
+    }
+
+    .cd-sep.closed-color { color: #1565c0; }
+
+    .cd-clock-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2.5px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    .cd-clock-icon.closed-color { border-color: #1565c0; color: #1565c0; }
+
+    .warning-banner {
+      background: var(--yellow-light);
+      border: 1.5px solid #ffe082;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--yellow);
+      font-weight: 600;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ===== کارت ساعات کاری ===== */
+    .hours-card { padding: 22px 28px; }
+
+    .hours-card-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .hours-item {
+      border-radius: var(--radius-sm);
+      padding: 16px 12px;
+      text-align: center;
+    }
+
+    .hours-item.spring      { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+    .hours-item.autumn      { background: #fffbeb; border: 1.5px solid #fde68a; }
+    .hours-item.friday-item { background: #fff0f0; border: 1.5px solid #fecaca; }
+
+    .hours-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .hours-item.spring      .hours-item-title { color: var(--green); }
+    .hours-item.autumn      .hours-item-title { color: #b45309; }
+    .hours-item.friday-item .hours-item-title { color: var(--red); }
+
+    .hours-item-times { font-size: 12px; color: var(--text-muted); line-height: 2; }
+    .hours-item-icon  { font-size: 22px; margin-bottom: 6px; }
+
+    .hours-item.friday-item .hours-item-times {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .hours-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    /* ===== فوتر ===== */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 4px 0 0;
+    }
+
+    /* ===== ریسپانسیو ===== */
+    @media (max-width: 540px) {
+      header { padding: 10px 12px; height: auto; flex-wrap: wrap; gap: 8px; }
+      nav { flex-wrap: wrap; justify-content: flex-start; gap: 4px; }
+      nav a { font-size: 12px; padding: 5px 8px; }
+      main { padding: 24px 12px 50px; }
+      .hero h1 { font-size: 22px; }
+      #digital-clock { letter-spacing: 2px; }
+      .status-card { padding: 18px 16px; }
+      .countdown-card { padding: 18px 16px; }
+      .card { padding: 18px 14px; }
+      .hours-grid { grid-template-columns: 1fr; }
+      .hours-item { display: flex; align-items: center; gap: 12px; text-align: right; }
+      .hours-item-icon { margin-bottom: 0; }
+    }
+
+    @media (max-width: 360px) {
+      nav a { font-size: 11px; padding: 4px 6px; }
+      .header-brand { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== هدر ===== -->
+<header>
+  <div class="header-brand">تعویض روغنی و مکانیکی امیدواری</div>
+  <nav>
+    <a href="index.html">صفحه اصلی</a>
+    <a href="about.html">درباره ما</a>
+    <a href="oil.html">چه نوع روغنی داخل موتور بریزم؟</a>
+    <a href="reservation.html">رزرو وقت</a>
+    <a href="open.html" class="active">ساعت کاری مغازه</a>
+  </nav>
+</header>
+
+<!-- ===== محتوای اصلی ===== -->
+<main>
+
+  <!-- هیرو -->
+  <div class="hero">
+    <h1>ساعت کاری مغازه</h1>
+    <p>در هر لحظه وضعیت باز یا بسته بودن مغازه و زمان باقی‌مانده تا تغییر وضعیت را مشاهده کنید.</p>
+  </div>
+
+  <!-- ساعت دیجیتال -->
+  <div class="card clock-card">
+    <div id="digital-clock">00:00:00</div>
+  </div>
+
+  <!-- تاریخ شمسی -->
+  <div class="card date-card">
+    <span class="cal-icon">📅</span>
+    <span id="persian-date">در حال بارگذاری...</span>
+  </div>
+
+  <!-- وضعیت باز/بسته -->
+  <div class="card status-card" id="status-card">
+    <div class="status-text">
+      <h2 id="status-title">در حال بارگذاری...</h2>
+      <p id="status-desc"></p>
+    </div>
+    <div class="status-icon" id="status-icon">⏳</div>
+  </div>
+
+  <!-- شمارش معکوس -->
+  <div class="card countdown-card" id="countdown-card">
+    <div class="cd-label" id="cd-label">در حال محاسبه...</div>
+    <div class="countdown-display">
+      <div class="countdown-numbers" id="countdown-numbers"></div>
+      <div class="cd-clock-icon" id="cd-icon">🕐</div>
+    </div>
+    <div id="warning-banner"></div>
+  </div>
+
+  <!-- ساعات کاری -->
+  <div class="card hours-card">
+    <div class="hours-card-title">
+      <span>🕐</span>
+      <span>ساعات کاری</span>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-item spring">
+        <div class="hours-item-icon">🌸</div>
+        <div class="hours-item-title">بهار و تابستان</div>
+        <div class="hours-item-times">۹:۰۰ تا ۱۳:۰۰<br>۱۶:۰۰ تا ۲۰:۳۰</div>
+      </div>
+      <div class="hours-item autumn">
+        <div class="hours-item-icon">🍂</div>
+        <div class="hours-item-title">پاییز و زمستان</div>
+        <div class="hours-item-times">۹:۰۰ تا ۱۳:۰۰<br>۱۶:۰۰ تا ۱۹:۳۰</div>
+      </div>
+      <div class="hours-item friday-item">
+        <div class="hours-item-icon">📅</div>
+        <div class="hours-item-title">جمعه</div>
+        <div class="hours-item-times">تعطیل</div>
+      </div>
+    </div>
+    <div class="hours-note">ساعات کاری در تعطیلات رسمی متغیر است.</div>
+  </div>
+
+  <!-- فوتر -->
+  <footer>زمان بر اساس ساعت رسمی ایران است.</footer>
+
+</main>
+
+<script>
+// ===== ابزارها =====
+
+function toPersianNum(n) {
+  return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+}
+
+function pad2(n) { return n < 10 ? '0' + n : String(n); }
+
+function getShamsiParts(date) {
+  const fmt = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+    timeZone: 'Asia/Tehran'
+  });
+  const parts = {};
+  fmt.formatToParts(date).forEach(p => { parts[p.type] = p.value; });
+  return parts;
+}
+
+function getShamsiMonth(date) {
+  const fmt = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+    month: 'numeric', timeZone: 'Asia/Tehran'
+  });
+  return parseInt(fmt.format(date).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+}
+
+function isSpringSummer(date) {
+  const m = getShamsiMonth(date);
+  return m >= 1 && m <= 6;
+}
+
+function getAfternoonClose(date) {
+  return isSpringSummer(date) ? { h: 20, m: 30 } : { h: 19, m: 30 };
+}
+
+function getTehranTime() {
+  return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tehran' }));
+}
+
+// ===== تشخیص وضعیت مغازه =====
+function getShopStatus() {
+  const now = getTehranTime();
+  const dayOfWeek = now.getDay();
+  const isFriday   = dayOfWeek === 5;
+  const isThursday = dayOfWeek === 4;
+
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const afternoonClose = getAfternoonClose(now);
+  const afClose = afternoonClose.h * 60 + afternoonClose.m;
+
+  const MORNING_START = 9 * 60;
+  const MORNING_END   = 13 * 60;
+  const AFTER_START   = 16 * 60;
+
+  if (isFriday) {
+    const nextOpen = new Date(now);
+    nextOpen.setDate(nextOpen.getDate() + 1);
+    nextOpen.setHours(9, 0, 0, 0);
+    return { open: false, friday: true, nextChange: nextOpen };
+  }
+
+  if (currentMinutes >= MORNING_START && currentMinutes < MORNING_END) {
+    const end = new Date(now);
+    end.setHours(13, 0, 0, 0);
+    return { open: true, session: 'morning', nextChange: end };
+  }
+
+  if (currentMinutes >= AFTER_START && currentMinutes < afClose) {
+    const end = new Date(now);
+    end.setHours(afternoonClose.h, afternoonClose.m, 0, 0);
+    return { open: true, session: 'afternoon', nextChange: end };
+  }
+
+  if (currentMinutes < MORNING_START) {
+    const next = new Date(now);
+    next.setHours(9, 0, 0, 0);
+    return { open: false, friday: false, nextChange: next };
+  }
+
+  if (currentMinutes >= MORNING_END && currentMinutes < AFTER_START) {
+    const next = new Date(now);
+    next.setHours(16, 0, 0, 0);
+    return { open: false, friday: false, nextChange: next };
+  }
+
+  if (isThursday) {
+    const next = new Date(now);
+    next.setDate(next.getDate() + 2);
+    next.setHours(9, 0, 0, 0);
+    return { open: false, friday: false, nextChange: next };
+  }
+
+  const next = new Date(now);
+  next.setDate(next.getDate() + 1);
+  next.setHours(9, 0, 0, 0);
+  return { open: false, friday: false, nextChange: next };
+}
+
+// ===== شمارش معکوس =====
+function getCountdown(targetDate) {
+  const now = getTehranTime();
+  let diff = Math.max(0, Math.floor((targetDate - now) / 1000));
+  const days    = Math.floor(diff / 86400); diff -= days * 86400;
+  const hours   = Math.floor(diff / 3600);  diff -= hours * 3600;
+  const minutes = Math.floor(diff / 60);    diff -= minutes * 60;
+  const seconds = diff;
+  return { days, hours, minutes, seconds };
+}
+
+// ===== رندرها =====
+function renderClock() {
+  const now = getTehranTime();
+  document.getElementById('digital-clock').textContent =
+    `${pad2(now.getHours())}:${pad2(now.getMinutes())}:${pad2(now.getSeconds())}`;
+}
+
+function renderDate() {
+  const parts = getShamsiParts(getTehranTime());
+  document.getElementById('persian-date').textContent =
+    `${parts.weekday} ${parts.day} ${parts.month} ${parts.year}`;
+}
+
+function renderStatus(status) {
+  const card  = document.getElementById('status-card');
+  const title = document.getElementById('status-title');
+  const desc  = document.getElementById('status-desc');
+  const icon  = document.getElementById('status-icon');
+  card.className = 'card status-card';
+
+  if (status.friday) {
+    card.classList.add('friday');
+    title.textContent = '🔴 تعطیل هستیم';
+    desc.textContent  = 'امروز جمعه است. مغازه تعطیل می‌باشد.';
+    icon.textContent  = '✖';
+  } else if (status.open) {
+    card.classList.add('open');
+    title.textContent = '🟢 باز هستیم';
+    desc.textContent  = 'مغازه در حال حاضر باز است.';
+    icon.textContent  = '✔';
+  } else {
+    card.classList.add('closed');
+    title.textContent = '🔴 تعطیل هستیم';
+    desc.textContent  = 'در حال حاضر مغازه تعطیل است.';
+    icon.textContent  = '✖';
   }
 }
+
+function renderCountdown(status) {
+  const label   = document.getElementById('cd-label');
+  const numbers = document.getElementById('countdown-numbers');
+  const cdIcon  = document.getElementById('cd-icon');
+  const warn    = document.getElementById('warning-banner');
+  warn.textContent = '';
+
+  const cd = getCountdown(status.nextChange);
+
+  if (status.open) {
+    label.textContent = 'تا پایان ساعت کاری امروز';
+    cdIcon.className  = 'cd-clock-icon';
+    cdIcon.textContent = '🕐';
+
+    numbers.innerHTML = `
+      <div class="cd-unit">
+        <span class="cd-value">${toPersianNum(pad2(cd.hours))}</span>
+        <span class="cd-unit-label">ساعت</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <span class="cd-value">${toPersianNum(pad2(cd.minutes))}</span>
+        <span class="cd-unit-label">دقیقه</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <span class="cd-value">${toPersianNum(pad2(cd.seconds))}</span>
+        <span class="cd-unit-label">ثانیه</span>
+      </div>
+    `;
+
+    if (cd.hours * 60 + cd.minutes < 30) {
+      warn.innerHTML = '⚠️ کمتر از ۳۰ دقیقه تا تعطیلی مغازه باقی مانده است.';
+      warn.className = 'warning-banner';
+    }
+  } else {
+    const nextDate = status.nextChange;
+    const parts    = getShamsiParts(nextDate);
+    const nH = toPersianNum(pad2(nextDate.getHours()));
+    const nM = toPersianNum(pad2(nextDate.getMinutes()));
+    label.innerHTML = `تا بازگشایی مغازه<br><small style="color:#64748b;font-size:12px">${parts.weekday} ${parts.day} ${parts.month} ${parts.year} - ساعت ${nH}:${nM}</small>`;
+    cdIcon.className   = 'cd-clock-icon closed-color';
+    cdIcon.textContent = '📅';
+
+    const dayPart = cd.days > 0 ? `
+      <div class="cd-unit">
+        <span class="cd-value closed-color">${toPersianNum(cd.days)}</span>
+        <span class="cd-unit-label">روز</span>
+      </div>
+      <span class="cd-sep closed-color">:</span>` : '';
+
+    numbers.innerHTML = `
+      ${dayPart}
+      <div class="cd-unit">
+        <span class="cd-value closed-color">${toPersianNum(pad2(cd.hours))}</span>
+        <span class="cd-unit-label">ساعت</span>
+      </div>
+      <span class="cd-sep closed-color">:</span>
+      <div class="cd-unit">
+        <span class="cd-value closed-color">${toPersianNum(pad2(cd.minutes))}</span>
+        <span class="cd-unit-label">دقیقه</span>
+      </div>
+      <span class="cd-sep closed-color">:</span>
+      <div class="cd-unit">
+        <span class="cd-value closed-color">${toPersianNum(pad2(cd.seconds))}</span>
+        <span class="cd-unit-label">ثانیه</span>
+      </div>
+    `;
+  }
+}
+
+function tick() {
+  renderClock();
+  renderDate();
+  const status = getShopStatus();
+  renderStatus(status);
+  renderCountdown(status);
+}
+
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
