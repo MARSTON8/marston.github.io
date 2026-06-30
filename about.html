@@ -112,7 +112,7 @@
       margin: 0 auto;
     }
 
-    /* ===== اسلایدشو ===== */
+    /* ===== کارت اسلایدشو ===== */
     .slideshow-card {
       background: var(--card-bg);
       border-radius: var(--radius);
@@ -131,9 +131,7 @@
     }
 
     .slideshow-wrap {
-      position: relative;
       width: 100%;
-      max-width: 420px;
       border-radius: 14px;
       overflow: hidden;
       box-shadow: 0 4px 16px rgba(0,0,0,0.13);
@@ -142,8 +140,9 @@
     .slides {
       display: none;
       width: 100%;
-      height: 260px;
-      object-fit: cover;
+      height: auto;
+      object-fit: contain;
+      border-radius: 14px;
       animation: imgFade 0.8s ease;
     }
 
@@ -152,7 +151,7 @@
       to   { opacity: 1; }
     }
 
-    /* دکمه‌های اسلایدشو */
+    /* دکمه و کپشن اسلایدشو */
     .slide-controls {
       display: flex;
       align-items: center;
@@ -165,10 +164,11 @@
       border-radius: 8px;
       padding: 6px 14px;
       font-family: 'Vazirmatn', sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       color: #8a6a00;
       cursor: pointer;
       transition: background 0.2s;
+      line-height: 1;
     }
 
     .slide-btn:hover { background: var(--gold-border); }
@@ -265,7 +265,7 @@
       main { padding: 24px 12px 50px; }
       .hero h1 { font-size: 21px; }
       .content-card { padding: 22px 18px; }
-      .slides { height: 200px; }
+      .slideshow-card { padding: 16px; }
     }
 
     @media (max-width: 380px) {
