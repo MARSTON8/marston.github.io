@@ -1,149 +1,411 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>درباره ما</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>درباره ما - تعویض روغنی و مکانیکی امیدواری</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!-- فونت وزیر -->
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet">
+    :root {
+      --gold: #c9a227;
+      --gold-light: #f5e9c0;
+      --gold-border: #e2c46a;
+      --bg: #f7f8fa;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+      --radius: 18px;
+      --accent: #1a3c5e;
+    }
 
-<style>
-  body {
-    font-family: 'Vazir', sans-serif;
-    background-color: #fff;
-    color: #222;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 18px;
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
+    /* ===== هدر ===== */
+    header {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
 
-  header h1 {
-    font-size: 22px;
-    margin: 0;
-  }
+    .header-brand {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
 
-  .back-btn {
-    background: #eee;
-    border: none;
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
 
-  .back-btn:hover {
-    background: #ddd;
-  }
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
 
-  .slideshow-container {
-    position: relative;
-    max-width: 340px;
-    margin: 25px auto;
-    overflow: hidden;
-    border-radius: 18px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
+    nav a:hover { background: #f3f4f6; }
 
-  .slides {
-    display: none;
-    width: 100%;
-    animation: fade 1s ease-in-out;
-  }
+    nav a.active {
+      background: var(--gold-light);
+      color: #8a6a00;
+      border: 1.5px solid var(--gold-border);
+      font-weight: 700;
+    }
 
-  @keyframes fade {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
-  }
+    /* ===== محتوا ===== */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.5s ease;
+    }
 
-  .caption {
-    margin-top: 12px;
-    font-size: 17px;
-    font-weight: bold;
-  }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-  section {
-    max-width: 90%;
-    margin: 25px auto;
-    line-height: 1.9;
-    text-align: justify;
-    direction: rtl;
-  }
+    /* ===== هیرو ===== */
+    .hero { text-align: center; padding: 8px 0 4px; }
 
-  h2 {
-    color: #333;
-    font-size: 20px;
-    margin-top: 22px;
-  }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
 
-</style>
+    .hero p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ===== اسلایدشو ===== */
+    .slideshow-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .slideshow-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.11);
+    }
+
+    .slideshow-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    }
+
+    .slides {
+      display: none;
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      animation: imgFade 0.8s ease;
+    }
+
+    @keyframes imgFade {
+      from { opacity: 0.3; }
+      to   { opacity: 1; }
+    }
+
+    /* دکمه‌های اسلایدشو */
+    .slide-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slide-btn {
+      background: var(--gold-light);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 18px;
+      color: #8a6a00;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .slide-btn:hover { background: var(--gold-border); }
+
+    .slide-caption {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      text-align: center;
+      min-width: 160px;
+    }
+
+    .slide-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+
+    .dot.active { background: var(--gold); }
+
+    /* ===== کارت متن ===== */
+    .content-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 36px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      line-height: 2;
+    }
+
+    .content-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.11);
+    }
+
+    .section { margin-bottom: 28px; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .item {
+      margin-bottom: 18px;
+      padding-right: 16px;
+      border-right: 3px solid var(--gold-border);
+    }
+
+    .item:last-child { margin-bottom: 0; }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .item-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      text-align: justify;
+    }
+
+    /* ===== فوتر ===== */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ===== ریسپانسیو ===== */
+    @media (max-width: 600px) {
+      header { height: auto; padding: 10px 12px; flex-direction: column; align-items: flex-end; gap: 8px; }
+      nav { justify-content: flex-end; }
+      nav a { font-size: 11.5px; padding: 5px 8px; }
+      main { padding: 24px 12px 50px; }
+      .hero h1 { font-size: 21px; }
+      .content-card { padding: 22px 18px; }
+      .slides { height: 200px; }
+    }
+
+    @media (max-width: 380px) {
+      nav a { font-size: 11px; padding: 4px 6px; }
+      .header-brand { font-size: 13px; }
+    }
+  </style>
 </head>
-
 <body>
 
+<!-- ===== هدر ===== -->
 <header>
-  <button class="back-btn" onclick="window.location.href='index.html'">بازگشت</button>
-  <h1>درباره ما</h1>
+  <div class="header-brand">تعویض روغنی و مکانیکی امیدواری</div>
+  <nav>
+    <a href="index.html">صفحه اصلی</a>
+    <a href="about.html" class="active">درباره ما</a>
+    <a href="oil.html">چه نوع روغنی داخل موتور بریزم؟</a>
+    <a href="service.html">چه زمانی سرویس خودرو را انجام دهیم؟</a>
+    <a href="reservation.html">رزرو وقت</a>
+    <a href="open.html">ساعت کاری مغازه</a>
+  </nav>
 </header>
 
-<div class="slideshow-container">
-  <img class="slides" src="atf.png" alt="دستگاه ATF Clinic">
-  <img class="slides" src="suction.png" alt="دستگاه ساکشن روغن">
-  <img class="slides" src="radiator.png" alt="دستگاه رادیاتور شور">
-</div>
-<div class="caption" id="caption">دستگاه ATF Clinic</div>
+<!-- ===== محتوا ===== -->
+<main>
 
-<section>
-  <h2>ما کی هستیم؟</h2>
-  <p>
-    تعویض روغنی و مکانیکی <b>امیدواری</b> با بیش از ۳۰ سال سابقه کاری در خدمت مردم عزیز شهرستان گلپایگان می‌باشد.
-    این مجموعه در حوزه خودروهای سواری، باری، کاربراتور و انژکتور فعالیت می‌کند و در زمینه تعمیرات انواع موتور، گیربکس و دیفرانسیل خودروهای خارجی و ایرانی
-    با مدیریت <b>عباسعلی امیدواری</b> آماده ارائه خدمات است.
-  </p>
+  <!-- هیرو -->
+  <div class="hero">
+    <h1>درباره ما</h1>
+    <p>در این صفحه می‌توانید با سابقه کاری، خدمات، تجهیزات و محیط کار تعویض روغنی و مکانیکی امیدواری آشنا شوید.</p>
+  </div>
 
-  <h2>چه دستگاه‌هایی داریم؟</h2>
+  <!-- اسلایدشو -->
+  <div class="slideshow-card">
+    <div class="slideshow-wrap">
+      <img class="slides" src="atf.png" alt="دستگاه ATF Clinic" />
+      <img class="slides" src="suction.png" alt="دستگاه ساکشن روغن" />
+      <img class="slides" src="radiator.png" alt="دستگاه رادیاتور شور" />
+    </div>
+    <div class="slide-dots">
+      <div class="dot active" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+    </div>
+    <div class="slide-controls">
+      <button class="slide-btn" onclick="changeSlide(-1)">&#8250;</button>
+      <div class="slide-caption" id="caption">دستگاه ATF Clinic</div>
+      <button class="slide-btn" onclick="changeSlide(1)">&#8249;</button>
+    </div>
+  </div>
 
-  <h3>ATF Clinic</h3>
-  <p>
-    برای تعویض واسکازین و سیالات خودرو به کار می‌رود. این دستگاه مایع قدیمی را تخلیه کرده، سیستم را شستشو داده و سپس مایع جدید را وارد مخزن خودرو می‌کند.
-  </p>
+  <!-- کارت متن -->
+  <div class="content-card">
 
-  <h3>ساکشن روغن</h3>
-  <p>
-    برای تعویض روغن و سایر سیالات خودرو استفاده می‌شود، به جز واسکازین. عملکرد آن سریع، دقیق و بدون آلودگی است.
-  </p>
+    <div class="section">
+      <div class="section-title">
+        <span>👥</span> ما کی هستیم؟
+      </div>
+      <div class="item">
+        <div class="item-desc">
+          تعویض روغنی و مکانیکی <strong>امیدواری</strong> با بیش از ۳۰ سال سابقه کاری در خدمت مردم عزیز شهرستان گلپایگان می‌باشد.
+          این مجموعه در حوزه خودروهای سواری، باری، کاربراتور و انژکتور فعالیت می‌کند و در زمینه تعمیرات انواع موتور، گیربکس و دیفرانسیل خودروهای خارجی و ایرانی
+          با مدیریت <strong>عباسعلی امیدواری</strong> آماده ارائه خدمات است.
+        </div>
+      </div>
+    </div>
 
-  <h3>رادیاتور شور</h3>
-  <p>
-    جهت شستشو و پاکسازی مسیرهای داخلی رادیاتور از رسوبات و آلودگی‌ها به کار می‌رود و موجب بهبود گردش مایع خنک‌کننده و افزایش کارایی سیستم خنک‌کننده می‌شود.
-  </p>
-</section>
+    <div class="section">
+      <div class="section-title">
+        <span>🔧</span> چه دستگاه‌هایی داریم؟
+      </div>
+
+      <div class="item">
+        <div class="item-title">ATF Clinic</div>
+        <div class="item-desc">
+          برای تعویض واسکازین و سیالات خودرو به کار می‌رود. این دستگاه مایع قدیمی را تخلیه کرده، سیستم را شستشو داده و سپس مایع جدید را وارد مخزن خودرو می‌کند.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-title">ساکشن روغن</div>
+        <div class="item-desc">
+          برای تعویض روغن و سایر سیالات خودرو استفاده می‌شود، به جز واسکازین. عملکرد آن سریع، دقیق و بدون آلودگی است.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-title">رادیاتور شور</div>
+        <div class="item-desc">
+          جهت شستشو و پاکسازی مسیرهای داخلی رادیاتور از رسوبات و آلودگی‌ها به کار می‌رود و موجب بهبود گردش مایع خنک‌کننده و افزایش کارایی سیستم خنک‌کننده می‌شود.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>تعویض روغنی و مکانیکی امیدواری — گلپایگان</footer>
+
+</main>
 
 <script>
   let slideIndex = 0;
   const slides = document.getElementsByClassName("slides");
-  const captionText = document.getElementById("caption");
+  const captionEl = document.getElementById("caption");
+  const dots = document.getElementsByClassName("dot");
   const captions = ["دستگاه ATF Clinic", "دستگاه ساکشن روغن", "دستگاه رادیاتور شور"];
+  let autoTimer;
 
-  function showSlides() {
-    for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
-    slideIndex++;
-    if (slideIndex > slides.length) slideIndex = 1;
-    slides[slideIndex - 1].style.display = "block";
-    captionText.textContent = captions[slideIndex - 1];
-    setTimeout(showSlides, 5000); // تغییر خودکار هر 15 ثانیه
+  function showSlide(n) {
+    slideIndex = (n + slides.length) % slides.length;
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+      dots[i].classList.remove("active");
+    }
+    slides[slideIndex].style.display = "block";
+    dots[slideIndex].classList.add("active");
+    captionEl.textContent = captions[slideIndex];
   }
-  showSlides();
+
+  function changeSlide(dir) {
+    clearTimeout(autoTimer);
+    showSlide(slideIndex + dir);
+    startAuto();
+  }
+
+  function goToSlide(n) {
+    clearTimeout(autoTimer);
+    showSlide(n);
+    startAuto();
+  }
+
+  function startAuto() {
+    autoTimer = setTimeout(() => {
+      showSlide(slideIndex + 1);
+      startAuto();
+    }, 5000);
+  }
+
+  showSlide(0);
+  startAuto();
 </script>
 
 </body>
