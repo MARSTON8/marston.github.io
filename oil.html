@@ -1,90 +1,383 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>چه نوع روغنی داخل موتور بریزم؟</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>چه نوع روغنی داخل موتور بریزم؟ - تعویض روغنی و مکانیکی امیدواری</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!-- فونت وزیر -->
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    :root {
+      --gold: #c9a227;
+      --gold-light: #f5e9c0;
+      --gold-border: #e2c46a;
+      --bg: #f7f8fa;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+      --radius: 18px;
+      --accent: #1a3c5e;
+    }
 
-<style>
-  body {
-    font-family: Vazirmatn, sans-serif;
-    background: #ffffff;
-    margin: 0;
-    padding: 20px;
-    color: #222;
-  }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
 
-  .oil-card {
-    max-width: 900px;
-    margin: auto;
-    line-height: 2;
-    font-size: 16px;
-  }
+    header {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
 
-  .oil-card h2 {
-    font-size: 22px;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
+    .header-brand {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
 
-  .oil-card h3 {
-    font-size: 18px;
-    margin-top: 30px;
-    font-weight: bold;
-  }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
 
-  .oil-card ul {
-    padding-right: 20px;
-  }
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
 
-  .oil-card li {
-    margin-bottom: 6px;
-  }
-</style>
+    nav a:hover { background: #f3f4f6; }
+
+    nav a.active {
+      background: var(--gold-light);
+      color: #8a6a00;
+      border: 1.5px solid var(--gold-border);
+      font-weight: 700;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero { text-align: center; padding: 8px 0 4px; }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .content-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 36px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      line-height: 2;
+    }
+
+    .content-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.11);
+    }
+
+    .section { margin-bottom: 32px; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title .icon { font-size: 20px; }
+
+    .item {
+      margin-bottom: 18px;
+      padding-right: 16px;
+      border-right: 3px solid var(--gold-border);
+    }
+
+    .item:last-child { margin-bottom: 0; }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .item-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.85;
+    }
+
+    .item-list { list-style: none; margin-top: 6px; }
+
+    .item-list li {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      padding: 3px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.7;
+    }
+
+    .item-list li::before {
+      content: "◾";
+      font-size: 9px;
+      color: var(--gold);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .notice-box {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 28px;
+    }
+
+    .notice-box .notice-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .notice-box .notice-desc {
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.85;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      header { height: auto; padding: 10px 12px; flex-direction: column; align-items: flex-end; gap: 8px; }
+      nav { justify-content: flex-end; }
+      nav a { font-size: 11.5px; padding: 5px 8px; }
+      main { padding: 24px 12px 50px; }
+      .hero h1 { font-size: 21px; }
+      .content-card { padding: 22px 18px; }
+      .section-title { font-size: 15px; }
+    }
+
+    @media (max-width: 380px) {
+      nav a { font-size: 11px; padding: 4px 6px; }
+      .header-brand { font-size: 13px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="oil-card">
+<header>
+  <div class="header-brand">تعویض روغنی و مکانیکی امیدواری</div>
+  <nav>
+    <a href="index.html">صفحه اصلی</a>
+    <a href="about.html">درباره ما</a>
+    <a href="oil.html" class="active">چه نوع روغنی داخل موتور بریزم؟</a>
+    <a href="service.html">چه زمانی سرویس خودرو را انجام دهیم؟</a>
+    <a href="reservation.html">رزرو وقت</a>
+    <a href="open.html">ساعت کاری مغازه</a>
+  </nav>
+</header>
 
-  <h2>چه نوع روغنی داخل موتور بریزم؟</h2>
+<main>
 
-  <p>
-    انتخاب روغن موتور مناسب تأثیر مستقیمی روی عمر موتور، مصرف سوخت و عملکرد خودرو دارد.
-    برای انتخاب روغن موتور مناسب باید به دو مشخصه‌ی اصلی توجه کرد: SAE و API.
-  </p>
+  <div class="hero">
+    <h1>چه نوع روغنی داخل موتور بریزم؟</h1>
+    <p>انتخاب روغن موتور مناسب، تأثیر مستقیمی بر عملکرد، مصرف سوخت و عمر موتور خودرو دارد. همیشه روغنی را انتخاب کنید که با مشخصات اعلام‌شده توسط شرکت سازنده خودرو مطابقت داشته باشد.</p>
+  </div>
 
-  <h3>SAE روغن چیست؟</h3>
-  <p>
-    SAE نشان‌دهنده‌ی گرانروی یا میزان غلظت روغن موتور است و مشخص می‌کند روغن در دمای سرد و گرم چگونه عمل می‌کند.
-    عدد قبل از W عملکرد روغن در هوای سرد و عدد بعد از W عملکرد روغن در دمای بالا را نشان می‌دهد.
-  </p>
+  <div class="content-card">
 
-  <ul>
-    <li>20W-50</li>
-    <li>10W-40</li>
-    <li>5W-30</li>
-  </ul>
+    <!-- SAE -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🔢</span>
+        SAE چیست؟
+      </div>
+      <div class="item">
+        <div class="item-desc">SAE مخفف Society of Automotive Engineers است و میزان گرانروی (غلظت) روغن موتور را مشخص می‌کند.</div>
+        <div class="item-desc">هرچه عدد قبل از حرف W کمتر باشد، عملکرد روغن در هوای سرد بهتر است.</div>
+        <div class="item-desc">هرچه عدد بعد از W بیشتر باشد، روغن در دمای بالا مقاومت بیشتری دارد.</div>
+      </div>
+    </div>
 
-  <h3>API چیست؟</h3>
-  <p>
-    API سطح کیفیت روغن موتور را مشخص می‌کند و نشان می‌دهد روغن تا چه حد از قطعات داخلی موتور محافظت می‌کند.
-  </p>
+    <!-- انواع گرانروی -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🛢️</span>
+        انواع گرانروی رایج
+      </div>
+      <div class="item">
+        <div class="item-title">0W-20</div>
+        <div class="item-desc">مناسب خودروهای جدید با مصرف سوخت پایین.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">5W-30</div>
+        <div class="item-desc">یکی از رایج‌ترین روغن‌های موتور برای خودروهای بنزینی.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">5W-40</div>
+        <div class="item-desc">مناسب موتورهایی که در دمای بالاتر کار می‌کنند.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">10W-40</div>
+        <div class="item-desc">مناسب بسیاری از خودروهای داخلی و موتورهای با کارکرد متوسط.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">20W-50</div>
+        <div class="item-desc">بیشتر برای موتورهای قدیمی یا دارای کارکرد بالا استفاده می‌شود.</div>
+      </div>
+    </div>
 
-  <p><strong>خودروهای بنزینی:</strong> SG - SJ - SL - SM - SN - SP</p>
-  <p><strong>خودروهای دیزلی:</strong> CF - CH-4 - CI-4</p>
+    <!-- API -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🏷️</span>
+        API چیست؟
+      </div>
+      <div class="item">
+        <div class="item-desc">API مخفف American Petroleum Institute است و سطح کیفیت روغن موتور را مشخص می‌کند.</div>
+        <div class="item-desc">هرچه حرف دوم در رده‌بندی API جلوتر باشد، کیفیت روغن بالاتر است.</div>
+      </div>
+    </div>
 
-  <h3>جمع‌بندی</h3>
-  <p>
-    انتخاب روغن موتور مناسب باید بر اساس توصیه شرکت سازنده خودرو در دفترچه راهنما انجام شود.
-    استفاده از روغن نامناسب باعث افزایش استهلاک، کاهش عمر موتور و مصرف سوخت بالاتر می‌شود.
-    در صورت نیاز، می‌توانید از متخصصین ما راهنمایی بگیرید.
-  </p>
+    <!-- نمونه‌های رایج -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">📋</span>
+        نمونه‌های رایج
+      </div>
+      <div class="item">
+        <div class="item-title">API SJ</div>
+        <div class="item-desc">مناسب خودروهای قدیمی‌تر.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">API SL</div>
+        <div class="item-desc">کیفیت بهتر نسبت به SJ.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">API SM</div>
+        <div class="item-desc">محافظت بیشتر از موتور.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">API SN</div>
+        <div class="item-desc">یکی از پرکاربردترین استانداردهای روغن موتور.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">API SP</div>
+        <div class="item-desc">جدیدترین استاندارد برای بسیاری از خودروهای مدرن.</div>
+      </div>
+    </div>
 
-</div>
+    <!-- چگونه انتخاب کنیم -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">✅</span>
+        چگونه روغن مناسب را انتخاب کنیم؟
+      </div>
+      <div class="item">
+        <div class="item-desc" style="font-weight:600;color:#374151;margin-bottom:6px;">روغن موتور باید بر اساس موارد زیر انتخاب شود:</div>
+        <ul class="item-list">
+          <li>توصیه شرکت سازنده خودرو</li>
+          <li>گرانروی (SAE)</li>
+          <li>سطح کیفیت (API)</li>
+          <li>شرایط آب‌وهوایی</li>
+          <li>میزان کارکرد موتور</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- نکات مهم -->
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">⚠️</span>
+        نکات مهم
+      </div>
+      <div class="item">
+        <ul class="item-list">
+          <li>روغن موتور را در زمان مناسب تعویض کنید.</li>
+          <li>همراه با تعویض روغن، فیلتر روغن نیز تعویض شود.</li>
+          <li>از ترکیب روغن‌های نامشخص یا بی‌کیفیت خودداری کنید.</li>
+          <li>همیشه از برندهای معتبر استفاده کنید.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- توصیه مهم -->
+    <div class="notice-box">
+      <div class="notice-title">⚠️ توصیه مهم</div>
+      <div class="notice-desc">
+        بهترین انتخاب، روغنی است که دقیقاً مطابق مشخصات درج‌شده در دفترچه راهنمای خودرو باشد. استفاده از روغن نامناسب می‌تواند باعث افزایش استهلاک موتور و کاهش عمر مفید آن شود.
+      </div>
+    </div>
+
+  </div>
+
+  <footer>تمامی اطلاعات جنبه راهنما دارند و توصیه سازنده خودرو در اولویت است.</footer>
+
+</main>
 
 </body>
 </html>
