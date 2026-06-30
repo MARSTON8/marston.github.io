@@ -1,379 +1,561 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مکانیکی و تعویض روغنی امیدواری</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تعویض روغنی و مکانیکی امیدواری</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://v1.fontapi.ir/css/Sahel');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #d4a017;
+      --gold-light: #f5e9c0;
+      --gold-border: #e2c46a;
+      --navy: #0d1b2a;
+      --navy-mid: #1a3c5e;
+      --green: #16a34a;
+      --green-hover: #15803d;
+      --bg: #f7f8fa;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+      --radius: 18px;
+    }
 
     body {
-      font-family: 'Sahel', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #ffffff;
-      color: #222;
-      transition: background 0.5s, color 0.5s;
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
     }
 
+    /* ===== هدر ===== */
     header {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 0 24px;
+      height: 64px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 15px 20px;
-      background: #ffffff;
-border-bottom: 1px solid #ddd;
-backdrop-filter: blur(10px);
-      position: sticky; /* ثابت بالا */
+      justify-content: space-between;
+      position: sticky;
       top: 0;
-      z-index: 1000;
-      transition: background 0.5s, color 0.5s;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
     }
 
-    .title {
-      font-size: 20px;
-      font-weight: bold;
+    .header-brand {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
     }
 
-    .clock {
-      font-size: 16px;
+    nav { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      white-space: nowrap;
     }
 
-    main {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
+    nav a:hover { background: #f3f4f6; }
+
+    nav a.active {
+      background: var(--gold-light);
+      color: #8a6a00;
+      border: 1.5px solid var(--gold-border);
+      font-weight: 700;
     }
 
-    .card {
-      background: #f8f8f8;
-      padding: 20px;
-      border-radius: 15px;
+    /* ===== Hero ===== */
+    .hero-section {
+      background: #fff;
+      padding: 60px 16px 50px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.6s ease;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
+    /* پس‌زمینه شش‌ضلعی محو */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(212,160,23,0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(13,27,42,0.04) 0%, transparent 50%);
+      background-size: 60px 60px;
+      pointer-events: none;
     }
 
-    .card img {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 10px;
+    .hero-graphic {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: 0 auto 36px;
     }
 
-    /* حالت شب */
-    body.night {
-      background: #1c2a3a; /* سرمه‌ای تلگرامی */
-      color: #eee;
-    }
-
-    body.night .card {
-      background: #243447;
-      color: #fff;
-    }
-
-    body.night header {
-      background: #152236; /* سرمه‌ای پررنگ */
-      color: #fff;
-    }
-
-    /* دکمه حبابی تغییر تم */
-    .theme-bubble {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: #0078ff;
-      color: #fff;
-      width: 55px;
-      height: 55px;
+    /* دایره مرکزی */
+    .hero-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 22px;
-      z-index: 1001;
+      font-size: 44px;
+      box-shadow: 0 8px 32px rgba(212,160,23,0.4);
+      z-index: 2;
+      animation: pulse 3s ease-in-out infinite;
     }
 
-    /* منوی تم */
-    .theme-menu {
-      position: fixed;
-      bottom: 80px;
-      left: 20px;
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 8px 32px rgba(212,160,23,0.4); }
+      50%       { box-shadow: 0 8px 48px rgba(212,160,23,0.65); }
+    }
+
+    /* حلقه اول */
+    .hero-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1.5px dashed rgba(212,160,23,0.25);
+    }
+
+    .hero-ring-1 { width: 160px; height: 160px; animation: spin 18s linear infinite; }
+    .hero-ring-2 { width: 240px; height: 240px; animation: spin 28s linear infinite reverse; border-color: rgba(13,27,42,0.1); }
+
+    @keyframes spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* آیکون‌های اطراف */
+    .orbit-icon {
+      position: absolute;
+      width: 52px;
+      height: 52px;
       background: #fff;
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      z-index: 3;
+    }
+
+    .orbit-icon:nth-child(3)  { top: 10px;  left: 50%; transform: translateX(-50%); }
+    .orbit-icon:nth-child(4)  { top: 50%;   left: 10px; transform: translateY(-50%); }
+    .orbit-icon:nth-child(5)  { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .orbit-icon:nth-child(6)  { top: 50%;   right: 10px; transform: translateY(-50%); }
+
+    /* خطوط اتصال */
+    .hero-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-size: clamp(20px, 4vw, 30px);
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 2;
+      max-width: 580px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--navy-mid); transform: translateY(-2px); }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-gold:hover { background: #b8860b; transform: translateY(-2px); }
+
+    /* ===== محتوای اصلی ===== */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 48px 16px 60px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      z-index: 1001;
-
-      opacity: 0;             /* پیش‌فرض مخفی */
-      pointer-events: none;   /* کلیک‌پذیر نباشه */
-      transition: opacity 0.4s ease; /* انیمیشن fade */
+      gap: 48px;
+      animation: fadeIn 0.7s ease;
     }
 
-    .theme-menu.show {
-      opacity: 1;
-      pointer-events: auto;   /* کلیک‌پذیر بشه */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .theme-menu button {
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
+    /* ===== عنوان بخش ===== */
+    .section-head {
+      text-align: center;
+      margin-bottom: 4px;
     }
-  a {
-  text-decoration: none;
-  color: inherit;
-}
 
-a.card {
-  display: block;
-}
-</style>
+    .section-head h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .section-head p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-border));
+      border-radius: 2px;
+      margin: 10px auto 0;
+    }
+
+    /* ===== کارت‌های خدمات ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border: 1.5px solid #f0f0f0;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--gold-border);
+    }
+
+    .service-icon-wrap {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin-bottom: 4px;
+    }
+
+    .ic-blue   { background: #eff6ff; }
+    .ic-amber  { background: #fffbeb; }
+    .ic-green  { background: #f0fdf4; }
+    .ic-purple { background: #faf5ff; }
+    .ic-teal   { background: #f0fdfa; }
+    .ic-red    { background: #fff1f2; }
+
+    .service-card h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .service-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      flex: 1;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy-mid);
+      margin-top: 4px;
+    }
+
+    .service-card:hover .service-link { color: var(--gold); }
+
+    /* ===== باکس‌های مزیت ===== */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .benefit-card {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(13,27,42,0.25);
+    }
+
+    .benefit-icon {
+      font-size: 36px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .benefit-card h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .benefit-card p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+
+    /* ===== فوتر ===== */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    footer strong { color: var(--gold); }
+
+    /* ===== ریسپانسیو ===== */
+    @media (max-width: 750px) {
+      .services-grid  { grid-template-columns: repeat(2, 1fr); }
+      .benefits-grid  { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      header { height: auto; padding: 10px 12px; flex-direction: column; align-items: flex-end; gap: 8px; }
+      nav { justify-content: flex-end; }
+      nav a { font-size: 11.5px; padding: 5px 8px; }
+      .hero-section { padding: 40px 16px 36px; }
+      .hero-graphic { width: 220px; height: 220px; }
+      .hero-center { width: 78px; height: 78px; font-size: 34px; }
+      .hero-ring-1 { width: 124px; height: 124px; }
+      .hero-ring-2 { width: 190px; height: 190px; }
+      .orbit-icon { width: 42px; height: 42px; font-size: 20px; }
+      .container { padding: 32px 12px 48px; gap: 36px; }
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      nav a { font-size: 11px; padding: 4px 6px; }
+      .header-brand { font-size: 13px; }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="title">مکانیکی و تعویض روغنی امیدواری</div>
-    <div class="clock" id="clock"></div>
-  </header>
 
-  <main>
-<a href="reserve.html" class="card">
-   <img src="https://img.icons8.com/ios-filled/100/000000/phone.png" alt="رزرو وقت">
-   <h3>رزرو وقت</h3>
-   <p>برای اطلاعات تماس کلیک نمایید</p>
-</a>
+<!-- ===== هدر ===== -->
+<header>
+  <div class="header-brand">تعویض روغنی و مکانیکی امیدواری</div>
+  <nav>
+    <a href="index.html" class="active">صفحه اصلی</a>
+    <a href="about.html">درباره ما</a>
+    <a href="oil.html">چه نوع روغنی داخل موتور بریزم؟</a>
+    <a href="service.html">چه زمانی سرویس خودرو را انجام دهیم؟</a>
+    <a href="reservation.html">رزرو وقت</a>
+    <a href="open.html">ساعت کاری مغازه</a>
+  </nav>
+</header>
 
-  <a href="location.html" class="card">
-   <img src="https://img.icons8.com/ios-filled/100/000000/marker.png" alt="لوکیشن مغازه">
-   <h3>لوکیشن مغازه</h3>
-   <p>آدرس و موقعیت مکانی مغازه ما</p>
-</a>
-    
-  <div class="card" onclick="window.location.href='about.html'">
-  <img src="https://img.icons8.com/ios-filled/100/000000/about.png" alt="About Icon">
-  <h3>درباره ما</h3>
-  <p>سوابق کاری و دستگاه ها.</p>
-</div>
- <div class="card" onclick="window.location.href='oil.html'">
-  <img src="https://img.icons8.com/ios-filled/100/000000/oil-industry.png" alt="روغن موتور">
-  <h3>چه نوع روغنی بریزم؟</h3>
-   <p>راهنمای انتخاب بهترین روغن موتور برای خودروی شما.</p>
- </div>
+<!-- ===== Hero ===== -->
+<section class="hero-section">
 
-<div class="card" onclick="window.location.href='open.html'">
-  <img src="https://img.icons8.com/ios-filled/100/000000/clock.png" alt="ساعت کاری">
-  <h3>چه موقع بازیم؟</h3>
-  <p>ساعت کاری مغازه</p>
-</div>
+  <div class="hero-graphic">
+    <!-- خطوط SVG اتصال -->
+    <svg class="hero-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+      <line x1="140" y1="140" x2="140" y2="36"  stroke="#d4a017" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+      <line x1="140" y1="140" x2="36"  y2="140" stroke="#d4a017" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+      <line x1="140" y1="140" x2="140" y2="244" stroke="#0d1b2a" stroke-width="1" stroke-dasharray="4 3" opacity="0.2"/>
+      <line x1="140" y1="140" x2="244" y2="140" stroke="#0d1b2a" stroke-width="1" stroke-dasharray="4 3" opacity="0.2"/>
+    </svg>
 
-    <div class="card" onclick="window.location.href='service.html'">
-  <img src="https://img.icons8.com/ios-filled/100/000000/maintenance.png" alt="سرویس خودرو">
-  <h3>چه زمانی سرویس خودرو را انجام دهیم؟</h3>
-  <p>چه زمانی فیلترها، روغن‌ها و سایر سرویس‌های دوره‌ای خودرو را انجام دهیم؟</p>
-</div>
-  </main>
-
-  <!-- دکمه حبابی -->
-  <div class="theme-bubble" onclick="toggleThemeMenu()">⚙️</div>
-
-  <!-- منوی تم -->
-  <div class="theme-menu" id="themeMenu">
-    <button onclick="setTheme('day')">☀️</button>
-    <button onclick="setTheme('night')">🌙</button>
-    <button onclick="setTheme('auto')">⚙️</button>
+    <div class="hero-ring hero-ring-1"></div>
+    <div class="hero-ring hero-ring-2"></div>
+    <div class="hero-center">🛢️</div>
+    <div class="orbit-icon">🔧</div>
+    <div class="orbit-icon">⚙️</div>
+    <div class="orbit-icon">🚗</div>
+    <div class="orbit-icon">🛠️</div>
   </div>
 
-  <script>
-    function updateClock() {
-      const now = new Date();
-      const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      document.getElementById('clock').textContent = new Intl.DateTimeFormat('fa-IR', options).format(now);
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    function setTheme(mode) {
-      if (mode === 'day') {
-        document.body.classList.remove('night');
-        localStorage.setItem('theme', 'day');
-      } else if (mode === 'night') {
-        document.body.classList.add('night');
-        localStorage.setItem('theme', 'night');
-      } else if (mode === 'auto') {
-        const hour = new Date().getHours();
-        if (hour >= 18 || hour < 5) {
-          document.body.classList.add('night');
-        } else {
-          document.body.classList.remove('night');
-        }
-        localStorage.setItem('theme', 'auto');
-      }
-    }
-
-    function toggleThemeMenu() {
-      const menu = document.getElementById('themeMenu');
-      menu.classList.toggle('show'); // fade in/out
-    }
-
-    // اعمال تنظیم قبلی
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) setTheme(savedTheme);
-  </script>
-<!-- ====== MUSIC WIDGET (paste this before </body> in index.html) ====== -->
-<style>
-/* widget styles (minimal, responsive) */
-#music-widget{position:fixed;right:18px;bottom:18px;z-index:9999;font-family: Vazir, sans-serif}
-.music-toggle{width:64px;height:64px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.45);cursor:pointer;color:#fff}
-.music-toggle img{width:34px;height:34px}
-.music-panel{position:absolute;right:0;bottom:82px;width:320px;max-width:calc(100vw - 36px);background:#111;color:#fff;border-radius:12px;padding:10px;box-shadow:0 18px 50px rgba(0,0,0,.5);transform-origin:bottom right;opacity:0;visibility:hidden;transition:all .25s}
-.music-panel.show{opacity:1;visibility:visible;transform:translateY(0)}
-.music-row{display:flex;align-items:center;gap:10px}
-.music-cover{width:56px;height:56px;border-radius:8px;background:#222;display:flex;align-items:center;justify-content:center}
-.music-meta{flex:1;text-align:left}
-.track-title{font-weight:700;font-size:15px;margin:0}
-.track-artist{font-size:13px;color:#ddd;margin:0}
-.controls{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px}
-.ctrl-btn{background:transparent;border:0;color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:18px}
-.progress{height:6px;background:rgba(255,255,255,0.12);border-radius:6px;margin-top:12px;overflow:hidden}
-.progress > i{display:block;height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);width:0%}
-.badge-live{display:inline-block;background:#ff3b30;color:#fff;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;margin-right:6px}
-@media (max-width:460px){ .music-panel{width:92%;right:6px;bottom:78px} .music-cover{width:48px;height:48px} .music-toggle{width:56px;height:56px} }
-</style>
-
-<div id="music-widget" aria-hidden="false">
-  <div class="music-toggle" id="musicToggle" title="پخش‌کننده موسیقی">
-    <img src="https://img.icons8.com/?size=100&id=9P70tJJKRpAo&format=png&color=ffffff" alt="music">
+  <h1 class="hero-title">
+    به وب‌سایت <span>تعویض روغنی و مکانیکی امیدواری</span> خوش آمدید
+  </h1>
+  <p class="hero-desc">
+    ارائه خدمات تخصصی تعویض روغن، سرویس‌های دوره‌ای، مکانیکی خودرو و مشاوره فنی با استفاده از بهترین برندهای روغن و قطعات.
+  </p>
+  <div class="hero-btns">
+    <a href="reservation.html" class="btn-primary">📞 رزرو وقت</a>
+    <a href="open.html" class="btn-gold">🕒 ساعت کاری</a>
   </div>
 
-  <div class="music-panel" id="musicPanel" role="region" aria-label="پخش‌کننده موسیقی">
-    <div class="music-row">
-      <div class="music-cover" id="musicCover">🎵</div>
-      <div class="music-meta">
-        <p class="track-title" id="trackTitle">--</p>
-        <p class="track-artist" id="trackArtist">--</p>
-      </div>
-    </div>
+</section>
 
-    <div class="controls">
-      <button class="ctrl-btn" id="prevBtn" title="قبلی">⏮</button>
-      <button class="ctrl-btn" id="playBtn" title="پخش/توقف">▶</button>
-      <button class="ctrl-btn" id="nextBtn" title="بعدی">⏭</button>
-      <span class="badge-live" id="liveBadge" style="display:none">زنده</span>
-    </div>
+<!-- ===== محتوا ===== -->
+<div class="container">
 
-    <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
-    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#ccc">
-      <span id="timeCurrent">0:00</span><span id="timeTotal">0:00</span>
+  <!-- کارت‌های خدمات -->
+  <div>
+    <div class="section-head">
+      <h2>خدمات ما</h2>
+      <p>هر آنچه برای نگهداری و سرویس خودروی شما نیاز دارید.</p>
+      <div class="divider"></div>
     </div>
   </div>
+
+  <div class="services-grid">
+
+    <a class="service-card" href="about.html">
+      <div class="service-icon-wrap ic-blue">📖</div>
+      <h3>درباره ما</h3>
+      <p>آشنایی با سابقه، تجهیزات و خدمات ما.</p>
+      <span class="service-link">مشاهده اطلاعات ←</span>
+    </a>
+
+    <a class="service-card" href="oil.html">
+      <div class="service-icon-wrap ic-amber">🛢️</div>
+      <h3>چه نوع روغنی داخل موتور بریزم؟</h3>
+      <p>راهنمای انتخاب روغن مناسب خودرو.</p>
+      <span class="service-link">مشاهده اطلاعات ←</span>
+    </a>
+
+    <a class="service-card" href="service.html">
+      <div class="service-icon-wrap ic-green">🛠️</div>
+      <h3>چه زمانی سرویس خودرو را انجام دهیم؟</h3>
+      <p>زمان تعویض روغن، فیلترها، تسمه‌ها و سایر سرویس‌های مهم خودرو.</p>
+      <span class="service-link">مشاهده اطلاعات ←</span>
+    </a>
+
+    <a class="service-card" href="reservation.html">
+      <div class="service-icon-wrap ic-purple">📞</div>
+      <h3>رزرو وقت</h3>
+      <p>برای جلوگیری از انتظار، قبل از مراجعه با ما تماس بگیرید.</p>
+      <span class="service-link">مشاهده اطلاعات ←</span>
+    </a>
+
+    <a class="service-card" href="open.html">
+      <div class="service-icon-wrap ic-teal">🕒</div>
+      <h3>ساعت کاری مغازه</h3>
+      <p>مشاهده ساعت کاری و وضعیت باز یا بسته بودن مغازه.</p>
+      <span class="service-link">مشاهده اطلاعات ←</span>
+    </a>
+
+    <a class="service-card" href="location.html">
+      <div class="service-icon-wrap ic-red">📍</div>
+      <h3>لوکیشن مغازه</h3>
+      <p>مشاهده موقعیت مغازه روی Google Maps و مسیریابی.</p>
+      <span class="service-link">مشاهده اطلاعات ←</span>
+    </a>
+
+  </div>
+
+  <!-- مزیت‌ها -->
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <span class="benefit-icon">⭐</span>
+      <h3>کیفیت تضمین‌شده</h3>
+      <p>استفاده از بهترین روغن‌ها و قطعات استاندارد</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">⚡</span>
+      <h3>خدمات سریع</h3>
+      <p>انجام سرویس در کوتاه‌ترین زمان ممکن</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">🛠️</span>
+      <h3>تجربه و تخصص</h3>
+      <p>سال‌ها تجربه در زمینه مکانیکی و تعویض روغن</p>
+    </div>
+  </div>
+
 </div>
 
-<script>
-(function(){
-  // --- playlist: put your uploaded files (in music/ folder) here ---
-  const playlist = [
-    { title: "خونه", artist: "معین", url: "https://marston8.github.io/marston.github.io/music/moein-khoone.mp3" },
-    { title: "محراب", artist: "جواد یساری", url: "https://marston8.github.io/marston.github.io/music/javadyasari-mehrab.mp3" },
-    { title: "فرنگیس", artist: "سیاوش", url: "https://marston8.github.io/marston.github.io/music/siavash-farangis.mp3" }
-  ];
-  // -----------------------------------------------------------------
+<!-- ===== فوتر ===== -->
+<footer>
+  تمامی حقوق این وب‌سایت محفوظ است.<br>
+  <strong>تعویض روغنی و مکانیکی امیدواری</strong>
+</footer>
 
-  const toggle = document.getElementById('musicToggle');
-  const panel = document.getElementById('musicPanel');
-  const playBtn = document.getElementById('playBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const titleEl = document.getElementById('trackTitle');
-  const artistEl = document.getElementById('trackArtist');
-  const progressBar = document.getElementById('progressBar');
-  const timeCurrent = document.getElementById('timeCurrent');
-  const timeTotal = document.getElementById('timeTotal');
-  const liveBadge = document.getElementById('liveBadge');
-
-  // audio
-  let audio = new Audio();
-  audio.preload = "metadata";
-  audio.crossOrigin = "anonymous";
-  let idx = Number(localStorage.getItem('player_idx') || 0);
-  let playing = false;
-
-  function loadTrack(i){
-    idx = (i + playlist.length) % playlist.length;
-    localStorage.setItem('player_idx', idx);
-    audio.src = playlist[idx].url;
-    titleEl.textContent = playlist[idx].title;
-    artistEl.textContent = playlist[idx].artist;
-    // hide live badge (we're playing local tracks) — if using live stream set true
-    liveBadge.style.display = 'none';
-    audio.load();
-  }
-
-  function play(){
-    audio.play().then(()=> {
-      playing = true;
-      playBtn.textContent = '⏸';
-      toggle.classList.add('playing');
-    }).catch(err=>{
-      // autoplay block: user must interact
-      console.warn('پخش خودکار بلاک شد:', err);
-      playing = false;
-      playBtn.textContent = '▶';
-      panel.classList.add('show');
-    });
-  }
-  function pause(){ audio.pause(); playing=false; playBtn.textContent='▶'; toggle.classList.remove('playing'); }
-
-  playBtn.addEventListener('click', ()=>{
-    if(!audio.src) loadTrack(idx);
-    if(playing) pause(); else play();
-  });
-  prevBtn.addEventListener('click', ()=>{ loadTrack(idx-1); if(playing) play(); });
-  nextBtn.addEventListener('click', ()=>{ loadTrack(idx+1); if(playing) play(); });
-
-  // time update
-  audio.addEventListener('timeupdate', ()=>{
-    if(audio.duration){ 
-      const pct = (audio.currentTime / audio.duration) * 100;
-      progressBar.style.width = pct + '%';
-      timeCurrent.textContent = formatTime(audio.currentTime);
-      timeTotal.textContent = formatTime(audio.duration);
-    }
-  });
-  audio.addEventListener('ended', ()=>{ loadTrack(idx+1); play(); });
-
-  function formatTime(s){
-    const m = Math.floor(s/60); const sec = Math.floor(s%60).toString().padStart(2,'0');
-    return m + ':' + sec;
-  }
-
-  // toggle panel
-  toggle.addEventListener('click', ()=>{ panel.classList.toggle('show'); });
-
-  // click outside closes
-  document.addEventListener('click', (e)=>{
-    if(!e.target.closest('#music-widget')) panel.classList.remove('show');
-  });
-
-  // init
-  loadTrack(idx);
-  // if previously playing, don't autoplay (browser policy) but UI reflects selected track
-  if(localStorage.getItem('player_playing')==='1'){ /* user had been playing before */ }
-
-  // Save playing state
-  window.addEventListener('beforeunload', ()=> localStorage.setItem('player_playing', playing ? '1' : '0') );
-
-})();
-</script>
-<!-- ====== END MUSIC WIDGET ====== -->
 </body>
 </html>
