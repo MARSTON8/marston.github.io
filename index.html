@@ -33,6 +33,7 @@
       direction: rtl;
     }
 
+    /* ===== هدر ===== */
     header {
       background: #fff;
       border-bottom: 1px solid #eee;
@@ -76,111 +77,130 @@
       font-weight: 700;
     }
 
+    /* ===== Hero ===== */
     .hero-section {
-      background: #fff;
-      padding: 60px 16px 50px;
+      background: linear-gradient(160deg, #0d1b2a 0%, #1a3c5e 60%, #0d1b2a 100%);
+      padding: 60px 16px 56px;
       text-align: center;
       position: relative;
       overflow: hidden;
       animation: fadeIn 0.6s ease;
     }
 
-    .hero-section::before {
-      content: '';
+    /* ذرات پس‌زمینه */
+    .bg-particles {
       position: absolute;
       inset: 0;
-      background-image:
-        radial-gradient(circle at 20% 50%, rgba(212,160,23,0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(13,27,42,0.04) 0%, transparent 50%);
       pointer-events: none;
     }
 
-    .hero-graphic {
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(212,160,23,0.07);
+      animation: floatP linear infinite;
+    }
+
+    .particle:nth-child(1) { width:90px;  height:90px;  left:5%;  top:15%; animation-duration:8s; }
+    .particle:nth-child(2) { width:55px;  height:55px;  left:80%; top:10%; animation-duration:6s; animation-delay:1s; }
+    .particle:nth-child(3) { width:110px; height:110px; left:65%; top:55%; animation-duration:10s; animation-delay:2s; }
+    .particle:nth-child(4) { width:45px;  height:45px;  left:18%; top:65%; animation-duration:7s;  animation-delay:3s; }
+    .particle:nth-child(5) { width:70px;  height:70px;  left:40%; top:80%; animation-duration:9s;  animation-delay:1.5s; }
+
+    @keyframes floatP {
+      0%   { transform: translateY(0) scale(1);    opacity: 0.3; }
+      50%  { transform: translateY(-22px) scale(1.06); opacity: 0.6; }
+      100% { transform: translateY(0) scale(1);    opacity: 0.3; }
+    }
+
+    /* قطره روغن */
+    .drop-wrap {
       position: relative;
-      width: 280px;
-      height: 280px;
+      width: 200px;
+      height: 220px;
       margin: 0 auto 36px;
     }
 
-    .hero-center {
+    .drop-svg {
+      width: 150px;
+      height: 170px;
       position: absolute;
-      top: 50%; left: 50%;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      filter: drop-shadow(0 0 28px rgba(212,160,23,0.65));
+      animation: dropPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes dropPulse {
+      0%, 100% { transform: translateX(-50%) scale(1);    filter: drop-shadow(0 0 28px rgba(212,160,23,0.55)); }
+      50%       { transform: translateX(-50%) scale(1.05); filter: drop-shadow(0 0 44px rgba(212,160,23,0.9)); }
+    }
+
+    .drop-inner {
+      position: absolute;
+      top: 44%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      width: 100px; height: 100px;
-      background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 44px;
-      box-shadow: 0 8px 32px rgba(212,160,23,0.4);
+      text-align: center;
       z-index: 2;
-      animation: pulse 3s ease-in-out infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 8px 32px rgba(212,160,23,0.4); }
-      50%       { box-shadow: 0 8px 48px rgba(212,160,23,0.65); }
+    .drop-inner .big-num {
+      font-size: 34px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
     }
 
-    .hero-ring {
+    .drop-inner .small-text {
+      font-size: 11px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .drips {
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      border: 1.5px dashed rgba(212,160,23,0.25);
-    }
-
-    .hero-ring-1 { width: 160px; height: 160px; animation: spin 18s linear infinite; }
-    .hero-ring-2 { width: 240px; height: 240px; animation: spin 28s linear infinite reverse; border-color: rgba(13,27,42,0.1); }
-
-    @keyframes spin {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to   { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    .orbit-icon {
-      position: absolute;
-      width: 52px; height: 52px;
-      background: #fff;
-      border-radius: 50%;
+      bottom: 4px; left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-      z-index: 3;
+      gap: 9px;
+      align-items: flex-end;
     }
 
-    .orbit-icon:nth-child(3) { top: 10px; left: 50%; transform: translateX(-50%); }
-    .orbit-icon:nth-child(4) { top: 50%; left: 10px; transform: translateY(-50%); }
-    .orbit-icon:nth-child(5) { bottom: 10px; left: 50%; transform: translateX(-50%); }
-    .orbit-icon:nth-child(6) { top: 50%; right: 10px; transform: translateY(-50%); }
+    .drip {
+      width: 9px;
+      border-radius: 5px;
+      background: var(--gold);
+      animation: dripAnim ease-in-out infinite;
+      opacity: 0.6;
+    }
 
-    .hero-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 1;
+    .drip:nth-child(1) { height: 22px; animation-duration: 1.8s; }
+    .drip:nth-child(2) { height: 32px; animation-duration: 2.2s; animation-delay: 0.3s; }
+    .drip:nth-child(3) { height: 16px; animation-duration: 1.5s; animation-delay: 0.6s; }
+
+    @keyframes dripAnim {
+      0%, 100% { transform: scaleY(1);   opacity: 0.4; }
+      50%       { transform: scaleY(1.3); opacity: 0.85; }
     }
 
     .hero-title {
       font-size: clamp(20px, 4vw, 30px);
       font-weight: 900;
-      color: var(--navy);
+      color: #fff;
       margin-bottom: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .hero-title span { color: var(--gold); }
 
     .hero-desc {
       font-size: 14px;
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.65);
       line-height: 2;
-      max-width: 580px;
-      margin: 0 auto 28px;
+      max-width: 560px;
+      margin: 0 auto 32px;
     }
 
     .hero-btns {
@@ -191,19 +211,6 @@
     }
 
     .btn-primary {
-      background: var(--navy);
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 28px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-primary:hover { background: var(--navy-mid); transform: translateY(-2px); }
-
-    .btn-gold {
       background: var(--gold);
       color: #fff;
       text-decoration: none;
@@ -211,11 +218,28 @@
       border-radius: 12px;
       font-size: 14px;
       font-weight: 700;
+      font-family: 'Vazirmatn', sans-serif;
       transition: background 0.2s, transform 0.15s;
     }
 
-    .btn-gold:hover { background: #b8860b; transform: translateY(-2px); }
+    .btn-primary:hover { background: #b8860b; transform: translateY(-2px); }
 
+    .btn-outline {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      font-family: 'Vazirmatn', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-outline:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+
+    /* ===== محتوا ===== */
     .container {
       max-width: 1000px;
       margin: 0 auto;
@@ -253,6 +277,7 @@
       margin: 10px auto 0;
     }
 
+    /* ===== کارت‌های خدمات ===== */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -321,6 +346,7 @@
 
     .service-card:hover .service-link { color: var(--gold); }
 
+    /* ===== مزیت‌ها ===== */
     .benefits-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -355,6 +381,7 @@
       line-height: 1.8;
     }
 
+    /* ===== فوتر ===== */
     footer {
       background: var(--navy);
       color: rgba(255,255,255,0.65);
@@ -366,6 +393,7 @@
 
     footer strong { color: var(--gold); }
 
+    /* ===== ریسپانسیو ===== */
     @media (max-width: 750px) {
       .services-grid  { grid-template-columns: repeat(2, 1fr); }
       .benefits-grid  { grid-template-columns: 1fr; }
@@ -375,12 +403,10 @@
       header { height: auto; padding: 10px 12px; flex-direction: column; align-items: flex-end; gap: 8px; }
       nav { justify-content: flex-end; }
       nav a { font-size: 11.5px; padding: 5px 8px; }
-      .hero-section { padding: 40px 16px 36px; }
-      .hero-graphic { width: 220px; height: 220px; }
-      .hero-center { width: 78px; height: 78px; font-size: 34px; }
-      .hero-ring-1 { width: 124px; height: 124px; }
-      .hero-ring-2 { width: 190px; height: 190px; }
-      .orbit-icon { width: 42px; height: 42px; font-size: 20px; }
+      .hero-section { padding: 40px 16px 40px; }
+      .drop-wrap { width: 160px; height: 180px; }
+      .drop-svg { width: 120px; height: 136px; }
+      .drop-inner .big-num { font-size: 26px; }
       .container { padding: 32px 12px 48px; gap: 36px; }
       .services-grid { grid-template-columns: 1fr; }
     }
@@ -393,6 +419,7 @@
 </head>
 <body>
 
+<!-- ===== هدر ===== -->
 <header>
   <div class="header-brand">تعویض روغنی و مکانیکی امیدواری</div>
   <nav>
@@ -405,21 +432,38 @@
   </nav>
 </header>
 
+<!-- ===== Hero ===== -->
 <section class="hero-section">
-  <div class="hero-graphic">
-    <svg class="hero-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-      <line x1="140" y1="140" x2="140" y2="36"  stroke="#d4a017" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
-      <line x1="140" y1="140" x2="36"  y2="140" stroke="#d4a017" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
-      <line x1="140" y1="140" x2="140" y2="244" stroke="#0d1b2a" stroke-width="1" stroke-dasharray="4 3" opacity="0.2"/>
-      <line x1="140" y1="140" x2="244" y2="140" stroke="#0d1b2a" stroke-width="1" stroke-dasharray="4 3" opacity="0.2"/>
+  <div class="bg-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="drop-wrap">
+    <svg class="drop-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f0c040;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#b8860b;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <path d="M50 5 C50 5, 15 55, 15 75 C15 95, 30 110, 50 110 C70 110, 85 95, 85 75 C85 55, 50 5, 50 5Z"
+        fill="url(#dropGrad)" />
+      <path d="M50 15 C50 15, 25 55, 25 72 C25 85, 35 95, 50 95"
+        fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
     </svg>
-    <div class="hero-ring hero-ring-1"></div>
-    <div class="hero-ring hero-ring-2"></div>
-    <div class="hero-center">🛢️</div>
-    <div class="orbit-icon">🔧</div>
-    <div class="orbit-icon">⚙️</div>
-    <div class="orbit-icon">🚗</div>
-    <div class="orbit-icon">🛠️</div>
+    <div class="drop-inner">
+      <div class="big-num">۳۰+</div>
+      <div class="small-text">سال تجربه</div>
+    </div>
+    <div class="drips">
+      <div class="drip"></div>
+      <div class="drip"></div>
+      <div class="drip"></div>
+    </div>
   </div>
 
   <h1 class="hero-title">
@@ -430,10 +474,11 @@
   </p>
   <div class="hero-btns">
     <a href="reserve.html" class="btn-primary">📞 رزرو وقت</a>
-    <a href="open.html" class="btn-gold">🕒 ساعت کاری</a>
+    <a href="open.html" class="btn-outline">🕒 ساعت کاری</a>
   </div>
 </section>
 
+<!-- ===== محتوا ===== -->
 <div class="container">
 
   <div class="section-head">
@@ -506,6 +551,7 @@
 
 </div>
 
+<!-- ===== فوتر ===== -->
 <footer>
   تمامی حقوق این وب‌سایت محفوظ است.<br>
   <strong>تعویض روغنی و مکانیکی امیدواری</strong>
