@@ -1,87 +1,371 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوکیشن مغازه ما</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوکیشن مغازه - تعویض روغنی و مکانیکی امیدواری</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://v1.fontapi.ir/css/Vazir');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #d4a017;
+      --gold-light: #f5e9c0;
+      --gold-border: #e2c46a;
+      --navy: #0d1b2a;
+      --navy-mid: #1a3c5e;
+      --green: #16a34a;
+      --green-hover: #15803d;
+      --bg: #f7f8fa;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+      --radius: 18px;
+    }
+
     body {
-      font-family: 'Vazir', sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ===== هدر ===== */
+    header {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-brand {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    nav { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { background: #f3f4f6; }
+
+    nav a.active {
+      background: var(--gold-light);
+      color: #8a6a00;
+      border: 1.5px solid var(--gold-border);
+      font-weight: 700;
+    }
+
+    /* ===== محتوا ===== */
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== هیرو ===== */
+    .hero { text-align: center; padding: 4px 0; }
+
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+
+    /* ===== کارت نقشه ===== */
+    .map-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1.5px solid #f0f0f0;
+    }
+
+    .map-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .map-frame-wrap {
+      width: 100%;
+      height: 380px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-frame-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .map-card-body {
+      padding: 24px 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-    }
-    h1 {
-      margin: 20px 0;
-      font-size: 28px;
-      color: #222;
-    }
-    p {
-      font-size: 18px;
+      gap: 12px;
       text-align: center;
-      margin: 10px 0;
-      color: #444;
     }
-    iframe {
-      border: 0;
-      width: 90%;
-      height: 300px;
-      margin: 20px 0;
+
+    .map-card-body h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy-mid);
+    }
+
+    .map-card-body p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .maps-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 28px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 4px;
     }
-    a.map-link {
-      display: inline-block;
-      margin: 10px 0 20px;
-      padding: 10px 20px;
-      background: #007BFF;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      transition: 0.3s;
+
+    .maps-btn:hover {
+      background: var(--green-hover);
+      transform: scale(1.03);
     }
-    a.map-link:hover {
-      background: #0056b3;
+
+    /* ===== باکس طلایی ===== */
+    .alert-card {
+      background: linear-gradient(135deg, #fffbe6 0%, #fef3c7 100%);
+      border: 1.5px solid var(--gold-border);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.2s;
     }
-    .back-btn {
-      margin: 20px 0;
-      padding: 12px 25px;
-      background: #444;
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
-      border-radius: 10px;
-      transition: 0.3s;
+
+    .alert-card:hover { transform: translateY(-2px); }
+
+    .alert-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gold);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
     }
-    .back-btn:hover {
-      background: #222;
+
+    .alert-text {
+      font-size: 13.5px;
+      color: #78350f;
+      line-height: 1.8;
+    }
+
+    /* ===== سه کارت پایین ===== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px 16px;
+      text-align: center;
+      border: 1.5px solid #f0f0f0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gold-light);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 14px;
+    }
+
+    .feature-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy-mid);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ===== فوتر ===== */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    footer strong { color: var(--gold); }
+
+    /* ===== ریسپانسیو ===== */
+    @media (max-width: 600px) {
+      header { height: auto; padding: 10px 12px; flex-direction: column; align-items: flex-end; gap: 8px; }
+      nav { justify-content: flex-end; }
+      nav a { font-size: 11.5px; padding: 5px 8px; }
+      main { padding: 24px 12px 40px; }
+      .hero h1 { font-size: 22px; }
+      .map-frame-wrap { height: 260px; }
+      .map-card-body { padding: 18px 16px; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      nav a { font-size: 11px; padding: 4px 6px; }
+      .header-brand { font-size: 13px; }
     }
   </style>
 </head>
 <body>
-  <h1>📍 لوکیشن مغازه ما</h1>
 
-  <p>آدرس: گلپایگان، ۷۰۰ متری جاده کوچری (مغازه واقع در جاده خاکی)</p>
-  <p>موقعیت مکانی مغازه روی نقشه:</p>
+<!-- ===== هدر ===== -->
+<header>
+  <div class="header-brand">تعویض روغنی و مکانیکی امیدواری</div>
+  <nav>
+    <a href="index.html">صفحه اصلی</a>
+    <a href="about.html">درباره ما</a>
+    <a href="oil.html">چه نوع روغنی داخل موتور بریزم؟</a>
+    <a href="service.html">چه زمانی سرویس خودرو را انجام دهیم؟</a>
+    <a href="reservation.html">رزرو وقت</a>
+    <a href="open.html">ساعت کاری مغازه</a>
+  </nav>
+</header>
 
-  <!-- نقشه گوگل -->
-  <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.21004557962!2d50.294993!3d33.457158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f96f3cdb8b6ff2f%3A0x8e9a5b7e4f4e8e0!2z2KfZhNiv2YjYqNmK2Kog2KfZhNi02KfYsdiq2YrYp9mGINin2YTYsdmC2KfYsiDZgdmG2LPZiiDYqNix2KzZitmE2Yc!5e0!3m2!1sfa!2s!4v1699999999999"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
+<!-- ===== محتوا ===== -->
+<main>
 
-  <a class="map-link" href="https://maps.app.goo.gl/zVJJFhJd8wnxLFgx8" target="_blank">
-    باز کردن در گوگل مپ
-  </a>
+  <!-- هیرو -->
+  <div class="hero">
+    <h1>لوکیشن مغازه</h1>
+    <p>برای مسیریابی آسان می‌توانید از نقشه گوگل استفاده کنید.</p>
+  </div>
 
-  <a class="back-btn" href="index.html">⬅ بازگشت به صفحه اصلی</a>
+  <!-- کارت نقشه -->
+  <div class="map-card">
+    <div class="map-frame-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d831.4!2d50.2882!3d33.4571!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2sF783%2B7V7+Golpayegan!5e0!3m2!1sfa!2s!4v1700000000000!5m2!1sfa!2s"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="موقعیت تعویض روغنی و مکانیکی امیدواری">
+      </iframe>
+    </div>
+    <div class="map-card-body">
+      <h2>تعویض روغنی و مکانیکی امیدواری</h2>
+      <p>برای مشاهده مسیر و مسیریابی روی دکمه زیر کلیک کنید.</p>
+      <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&query=F783%2B7V7+Golpayegan" target="_blank" rel="noopener">
+        📍 مشاهده در Google Maps
+      </a>
+    </div>
+  </div>
+
+  <!-- باکس طلایی -->
+  <div class="alert-card">
+    <div class="alert-icon">🚗</div>
+    <div class="alert-text">
+      قبل از مراجعه، در صورت نیاز با ما تماس بگیرید تا از شلوغ نبودن مغازه مطلع شوید.
+    </div>
+  </div>
+
+  <!-- سه کارت -->
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📍</div>
+      <h3>مسیریابی آسان</h3>
+      <p>با یک کلیک وارد Google Maps شوید.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚗</div>
+      <h3>دسترسی راحت</h3>
+      <p>دسترسی آسان با خودروی شخصی.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛠️</div>
+      <h3>آماده خدمت</h3>
+      <p>در ساعات کاری پذیرای شما هستیم.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ===== فوتر ===== -->
+<footer>
+  تمامی حقوق این وب‌سایت محفوظ است.<br>
+  <strong>تعویض روغنی و مکانیکی امیدواری</strong>
+</footer>
+
 </body>
 </html>
