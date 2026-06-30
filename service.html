@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>چه زمانی سرویس خودرو را انجام دهیم؟ - تعویض روغنی و مکانیکی امیدواری</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a227;
+      --gold-light: #f5e9c0;
+      --gold-border: #e2c46a;
+      --bg: #f7f8fa;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+      --radius: 18px;
+      --accent: #1a3c5e;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-brand {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { background: #f3f4f6; }
+
+    nav a.active {
+      background: var(--gold-light);
+      color: #8a6a00;
+      border: 1.5px solid var(--gold-border);
+      font-weight: 700;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .content-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 36px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      line-height: 2;
+    }
+
+    .content-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.11);
+    }
+
+    .section { margin-bottom: 32px; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title .icon { font-size: 20px; }
+
+    .item {
+      margin-bottom: 18px;
+      padding-right: 16px;
+      border-right: 3px solid var(--gold-border);
+    }
+
+    .item:last-child { margin-bottom: 0; }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .item-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.85;
+    }
+
+    .item-list { list-style: none; margin-top: 6px; }
+
+    .item-list li {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      padding: 3px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.7;
+    }
+
+    .item-list li::before {
+      content: "◾";
+      font-size: 9px;
+      color: var(--gold);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .notice-box {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 28px;
+    }
+
+    .notice-box .notice-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .notice-box .notice-desc {
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.85;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      header { height: auto; padding: 10px 12px; flex-direction: column; align-items: flex-end; gap: 8px; }
+      nav { justify-content: flex-end; }
+      nav a { font-size: 11.5px; padding: 5px 8px; }
+      main { padding: 24px 12px 50px; }
+      .hero h1 { font-size: 21px; }
+      .content-card { padding: 22px 18px; }
+      .section-title { font-size: 15px; }
+    }
+
+    @media (max-width: 380px) {
+      nav a { font-size: 11px; padding: 4px 6px; }
+      .header-brand { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">تعویض روغنی و مکانیکی امیدواری</div>
+  <nav>
+    <a href="index.html">صفحه اصلی</a>
+    <a href="about.html">درباره ما</a>
+    <a href="oil.html">چه نوع روغنی داخل موتور بریزم؟</a>
+    <a href="service.html" class="active">چه زمانی سرویس خودرو را انجام دهیم؟</a>
+    <a href="reservation.html">رزرو وقت</a>
+    <a href="open.html">ساعت کاری مغازه</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="hero">
+    <h1>چه زمانی سرویس خودرو را انجام دهیم؟</h1>
+    <p>با رعایت سرویس‌های دوره‌ای، عمر موتور، گیربکس و سایر قطعات خودرو افزایش یافته و از هزینه‌های سنگین تعمیرات جلوگیری می‌شود.</p>
+  </div>
+
+  <div class="content-card">
+
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">⚙️</span>
+        زمان تعویض تسمه‌های خودرو
+      </div>
+      <div class="item">
+        <div class="item-title">تسمه تایم (تایمینگ)</div>
+        <div class="item-desc">هر ۶۰ تا ۸۰ هزار کیلومتر تعویض شود.</div>
+        <div class="item-desc">هنگام تعویض تسمه تایم، بلبرینگ تایم (ساعتی) و هرزگردها نیز در صورت نیاز تعویض شوند.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">تسمه دینام</div>
+        <div class="item-desc">تسمه دینام و غلتک آن در صورت استهلاک تعویض و به‌درستی تنظیم شوند.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🔧</span>
+        زمان تعویض فیلترهای خودرو
+      </div>
+      <div class="item">
+        <div class="item-title">فیلتر روغن</div>
+        <div class="item-desc">همراه با هر بار تعویض روغن موتور تعویض شود.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">فیلتر هوا</div>
+        <div class="item-desc">همراه با تعویض روغن بررسی و در صورت نیاز تعویض گردد.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">فیلتر کابین</div>
+        <div class="item-desc">همزمان با سرویس دوره‌ای تعویض شود.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">فیلتر سوخت</div>
+        <div class="item-desc">هر ۲۰ تا ۳۰ هزار کیلومتر تعویض گردد.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🛢️</span>
+        زمان تعویض روغن گیربکس
+      </div>
+      <div class="item">
+        <div class="item-title">گیربکس دستی (واسکازین)</div>
+        <div class="item-desc">هر ۳۰ تا ۶۰ هزار کیلومتر تعویض شود.</div>
+      </div>
+      <div class="item">
+        <div class="item-title">گیربکس اتوماتیک</div>
+        <div class="item-desc">هر ۶۰ هزار کیلومتر روغن گیربکس تعویض گردد.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">💧</span>
+        روغن هیدرولیک و مایع ترمز
+      </div>
+      <div class="item">
+        <div class="item-desc">هر ۶۰ هزار کیلومتر یا طبق توصیه شرکت سازنده تعویض شوند.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="icon">🌡️</span>
+        مایع خنک‌کننده (ضدیخ)
+      </div>
+      <div class="item">
+        <div class="item-desc">هر دو سال یک‌بار تعویض گردد.</div>
+        <div class="item-desc" style="margin-top:8px;font-weight:600;color:#374151;">استفاده نکردن از ضدیخ باعث موارد زیر می‌شود:</div>
+        <ul class="item-list">
+          <li>خرابی ترموستات</li>
+          <li>خرابی واترپمپ</li>
+          <li>زنگ‌زدگی سیستم خنک‌کننده</li>
+          <li>ایجاد رسوب</li>
+          <li>افزایش دمای موتور</li>
+          <li>آسیب به سرسیلندر و بلوک سیلندر</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="notice-box">
+      <div class="notice-title">⚠️ توصیه مهم</div>
+      <div class="notice-desc">
+        مقادیر ذکر شده عمومی هستند.<br>
+        همیشه دفترچه راهنمای خودرو و توصیه شرکت سازنده را در اولویت قرار دهید.
+      </div>
+    </div>
+
+  </div>
+
+  <footer>تمامی اطلاعات جنبه راهنما دارند و توصیه سازنده خودرو در اولویت است.</footer>
+
+</main>
+
+</body>
+</html>
